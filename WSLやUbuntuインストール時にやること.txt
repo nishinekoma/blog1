@@ -17,6 +17,3 @@ sudo gem update
 General Ubuntu cmd
     rmdir directoryname
     exit 
-
-
-    a1
