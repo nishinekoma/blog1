@@ -1,0 +1,174 @@
+text継承元：React_on_Rails.txt https://github.com/nishinekoma/Railsblog/blob/feature1/React_on_Rails.txt
+
+参考：
+https://www.shakacode.com/react-on-rails/docs/guides/tutorial/
+※Ubuntu環境
+Ruby
+https://rubyinstaller.org/downloads/
+Rails 概要
+https://railstutorial.jp/chapters/beginning?version=3.2
+公式doc
+https://guides.rubyonrails.org/getting_started.html
+Ruby on Rails downloads
+管理者権限で　gem update --system
+              gem install rails
+
+
+
+/---*Rails doc memo*---/
+doc for https://guides.rubyonrails.org/getting_started.html#creating-a-new-rails-project
+繰り返しをしない。　同じ情報を何度も書かないことで、コードの保守性、拡張性が向上し、バグが少なくなります。
+設定よりも規約　　　
+
+Active Reacodeについて
+    ・ビジネスデータとロジックを担うシステム層
+    ・データベース　
+    　　・Physical directory location for database
+           config/database.yml 
+             ここの中の db/development.sqlite3
+             が実体である。
+             root 配下のdb development.sqlite3がありここで保存されている。
+
+
+
+/---*用語*---/
+Shakepacker　Webpackerの後継。
+Webpacker 　　CSS、JavaScript、画像などを１つのファイルとしてまとめるためのモジュール
+            　バンドラーで、node.jsのモジュールの1つ
+モジュールバンドラー　ウェブアプリケーションの開発において、複数のモジュールやファイル
+                    　をまとめて1つのファイルに結合するツール
+
+バンドル    複数のファイルやリソースのまとまり
+
+domain（ドメイン） 領域　特定のプログラミングプロジェクトの対象主題を表す。　https://en.wikipedia.org/wiki/Domain_(software_engineering)
+
+ルート　Railsアプリケーション内で受け入れられるHTTPリクエストのパスとそれに関連するコントローラーアクションとを関連付ける設定
+
+CRUD (Create, read, update and delete
+        作成、読み取り、更新、削除)
+
+DSL(Domain Specific Language) ドメイン固有言語　https://gihyo.jp/admin/feature/01/dsl/0001
+        ・特徴
+            ・メタプログラミング（ロジックを直接コーディングするのではなくパターンを持ったロジックを
+              meta :高次な、超〜　生成する高位ロジックを定義する方法のこと。）主に対象言語に埋め込まれたマクロ言語によって行われる。
+
+ハードコーティング　：ソフトウェア開発においてソースコードに直接書き込む形でデータを挿入する行為を指す。
+
+/---*用語　ネット関係*---/
+リッスンアドレス　ポート番号を開いて外部からの接続を待っている状態。
+
+http://127.0.0.1:3000
+    http://   :通信プロトコル名　web上のデータやドキュメントのデータを転送するためのプロトコル。
+    127.0.0.1 :IPv4のローカルホスト　常に自分自身。
+    :3000     :ポート番号　ポートは　特定のプロセスが通信するために割り当てられた番号。
+
+/---*programming syntax for Rails and Ruby*---/
+
+    /---*programming syntax for Ruby*---/
+    ・A < B クラス継承　AがBを継承している。　
+
+    ・def メソッド定義　https://www.sejuku.net/blog/19275
+
+    ・::  https://qiita.com/hatorijobs/items/87a2bd93f8666d77d711
+        ・メソッドや定数を呼び出す際にダブルコロンが使われる。
+        ・名前空間の絶対パスで指定する際に使われる。
+       ActiveRecord::Migration[7.1]#MigrationAPI7.1を指定。　
+    
+    ・ブロック
+        　・Rubyではdo ~ endの一塊（処理の塊）をブロックと言う。
+        　・ブロックは、一連の処理を関数の引数に渡す為に使う
+    
+    ・ブロック演算子 |t| https://rails-study.net/proc-block/
+
+    ・インクルード　：指定されたモジュールの定義(メソッド、定数)を引き継ぐこと。
+
+    ・インクルーダー ：　取り込むクラスを「インクルーダー」と呼びます。
+
+    ・特異メソッド　：　メソッドは定義したオブジェクトのみに対して使用することが可能、他のオブジェクトでは使用できない。
+
+    ・Rubyの独自の機能
+        ・Mix-in　：classにmoduleの機能を混ぜ合わせることができる。
+            ・モジュール内のメソッドをインスタンスメソッドとして利用することができる。
+        ・
+    
+    ・クラスメソッドとは　https://zenn.dev/hiroakimatsuoka/articles/ddd3b55ab53f95
+        ・クラス全体に関わるデータの変更・参照 インスタンスメソッドとは別。
+        ・
+    
+    ・インスタンス変数　https://www.javadrive.jp/ruby/class/index4.html
+        ・＠変数名　
+
+    ・unless文はif文の反対。
+        →falseだったら〇〇する。
+
+    ・Railsでのフックとは　hook　https://railsguides.jp/active_record_callbacks.html#オブジェクトのライフサイクルhttps://railsguides.jp/active_record_callbacks.html#オブジェクトのライフサイクル
+        ・フック＝ライフサイクルメソッド
+            ・ライフサイクルメソッド　Railsでの
+                ・ライフサイクル　→　Active Recoredでのライフサイクルとはオブジェクトの状態遷移の前、後等。
+
+    ・ブロック引数　| parameter| https://rails-study.net/proc-block/
+        ・&block
+        ・https://rails-study.net/proc-block/　
+            ↑　Procについて書いてあるので見る。
+
+    ・コロン　：　について
+        https://qiita.com/mdgwshk2021/items/5517afe1195d713b6f70
+        https://jp-seemore.com/web/8590/#toc2
+    ・コールバックとは、
+        オブジェクトのライフサイクル期間における特定の瞬間に呼び出されるメソッドのことです。
+        コールバックを利用することで、Active Recordオブジェクトが作成・保存・更新・削除・検証・
+        データベースからの読み込み、などのイベント発生時に常に実行されるコードを書けるようになります。
+
+    /---*programming syntax for ERB*---/
+    ERB(mbedded Ruby)
+        ・HTMLなどのテキストにRubyのスクリプトを埋め込むためのライブラリです。
+        ・ドキュメントに埋め込まれた Ruby コードを評価するテンプレート システムです。
+    <% %>タグ
+
+ショートカットを追加
+
+
+
+/---*2024/02/08~ React_Typescript.txtから英語続き。*---/
+Reveal(リベアル)動詞：　N:隠されたものを公開する。　明かす、明らかにする、正体を表す。見せる。
+Bundle(バンドル)動詞：　包む、束ねる
+Without(ウィショウト)　前置詞　コア：..なしで　「もっていないとか」　：...がなく、※...がなければ
+assets(アセッ（ト）ツ)　資産、強み
+notice(ノォゥティス)通知、気づく、わかる、注目する　※五感を通じて気づくことを表します。
+either(エイザー)どちらか一方の、どちらかの、
+preset(プリセット)(...を)予め準備しておく、(…を)前もって決める　あらかじめ調整しておく
+per(パー)前置詞　...につき、...ごとに、...で、...によって
+        She writes 20 pages per day.
+        彼女は１日につき20枚の原稿を書く
+Define(ディファン)動詞：定義する、意味を明確にする、(...と)定義する、明らかにする、境界などを定める、
+patient(ペイシェント)　患者（苦しみに耐える人）語源は　我慢する人。　
+invoke(インボーク)　※　何かを頼んだり、求めたりするときに使われる。　引き起こす、祈る、訴える、頼る、実施する
+article(アーティクル)　新聞や雑誌等の記事。　法律などの箇条　※記事でつかわれそう。
+moment(モーメント)瞬間、...した瞬間に、...するやいなや、　時、機会
+represent(リプレゼント)　意味する、(...の)意義がある。
+concerns(コ(ク)ンサーン)　懸念事項、　(...に)関連している、重要である？
+migration(マイグレーション)　移住、渡り、移行
+alter(オルター)(...を)(部分的に)変える、変更する、作り変える・　
+    例文:
+    Person A: "Hey, did you update the database schema for the new feature?"
+    Person B: "Yes, I had to alter the 'users' table to include a 'last_login' column."
+
+    翻訳:
+    Aさん: "ねえ、新しい機能のためにデータベースのスキーマをアップデートした？"
+    Bさん: "はい、'users' テーブルを変更して 'last_login' 列を追加しなければなりませんでした。"
+forbid(フォーベェぃと)禁じる、禁止する　過去形forbidden
+presence(プレゼンス)存在、あること、現存、出席、配置
+Edit(エディット)編集する、編集(発行)するやいなや、
+belong(ビロング)(所有者として)(...に)属する、(...の)ものである、
+association(アソシエーション)名詞：協会、連合、連携、※共通の目的で構成された　関連付けの意味でいんじゃね
+inclusion(インクルーション)名詞：含有物、包含
+Without A ：　Aがなければ
+
+文法ActiveRecord::Migration[7.1]
+For 目的語
+    ・条件を示す場合
+    ・目的を示す場合
+    がある。
+
+At the moment　ちょうど今、目下、　ニュアンス　：nowより硬い
+Are you sure?  発言の内容の真実性を問うてる。　ほんとに間違いないんだよね？？？の意味。

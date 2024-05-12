@@ -1,0 +1,33 @@
+リダイレクト
+    //ArticlesControllerとindexのアクション。　
+    bin/rails generate controller Articles index --skip-routes
+    以下生成（重要なもののみ抜粋
+    　controller                  app/controllers/articles_controller.rb と
+    　viewfile　　　　　　　　　　app/views/articles/index.html.erbが生成。
+　　ルート確認
+　　　・bin/rails routes
+MVC　モデル生成
+bin/rails generate model Article title:string body:text
+    移行ファイル 　　　 db/migrate/<timestamp>_create_articles.rb 　//db関係に使用。構造等。
+    　　詳細　https://railsguides.jp/active_record_migrations.html
+        以降ファイルをもとに　DBを作成する
+        bin/rails db:migrate
+        DBとの対話
+        　bin/rails console
+　　　　　新しいArticleオブジェクトを初期化できます。
+　　　　　・article = Article.new(title: "Hello Rails", body: "I am on Rails!")
+          保存
+          ・article.save
+          DBから取得
+          ・Article.find(1)
+          ・Article.all　　　//すべて取得
+          対話終了
+          ・exit
+
+    モデル ファイル  　　app/models/article.rb です。　　　　　　　 //
+
+
+
+public Document Temprary memo
+Ruby DSL　https://qiita.com/getty104/items/b3fcc1f86846fb86f168
+
