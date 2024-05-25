@@ -17,7 +17,13 @@ class ArticlesController < ApplicationController
     if @article.save
       redirect_to @article
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_entity #エラー時のメッセージ　clientが送信したリクエスト処理できないトキイに使用されえる。
+
     end
   end
+
+  private
+    def article_params
+      params.require(:article).permit(:title, :body)
+    end
 end

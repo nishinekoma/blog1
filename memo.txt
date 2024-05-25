@@ -31,3 +31,11 @@ bin/rails generate model Article title:string body:text
 public Document Temprary memo
 Ruby DSL　https://qiita.com/getty104/items/b3fcc1f86846fb86f168
 
+    ('A01001', 'A01', 'apple'),('G02002', 'G02', 'grape'), ('B03003', 'B03', 'banana'),('P01004', 'P01', 'peach'),('M02005', 'M02', 'meron');
+
+
+
+html Generate helper method
+https://guides.rubyonrails.org/form_helpers.html#a-generic-search-form
+ example 
+ ・checkbox,form,radiobuttons,datefields
