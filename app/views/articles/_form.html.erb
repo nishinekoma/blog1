@@ -1,0 +1,29 @@
+<%= form_with model: article do |form| %>
+  <div>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+    <% article.errors.full_messages_for(:title).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %><br>
+    <% article.errors.full_messages_for(:body).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+<!--partial 部分的なファイル名　パーシャルファイル名は　最初に　＿　を
+　　つける必要がある。
+　　なぜボタンの値　（edit and new）でかわるのか https://stackoverflow.com/questions/30520684/rails-why-does-my-submit-button-say-create-vs-update-depending-on
+    https://qiita.com/murata0705/items/52538c08778c39a91ec2 詳細
+    form_with はどのようにして　post or patch　を判断しているか　https://qiita.com/P-man_Brown/items/858f5ae74c5c06efc799
+　   post は　新しく作る。 patch　は　partial 一部の更新
+    つか log にでる。
+    -->

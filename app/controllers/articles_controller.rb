@@ -7,12 +7,13 @@ class ArticlesController < ApplicationController
   def show
     @article = Article.find(params[:id])
   end
+
   def new
-    @article = Article.new
+    @article = Article.new #新規ユーザを作成している　post
   end
 
   def create
-    @article = Article.new(title: "...", body: "...")
+    @article = Article.new(article_params)#新規ユーザを作成している　post
 
     if @article.save
       redirect_to @article
@@ -22,8 +23,31 @@ class ArticlesController < ApplicationController
     end
   end
 
-  private
+  def edit #DBから記事を取得 @articleに保存
+    @article = Article.find(params[:id]) #既存のユーザを参照している　patch
+  end
+
+  def update
+    @article = Article.find(params[:id])#DBから再取得　既存のユーザを参照している　patch
+    p "#{params[:id]}      #{article_params}"
+    if @article.update(article_params)
+      redirect_to @article
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+
+    redirect_to root_path, status: :see_other
+  end
+  
+
+  private #ArticlesControllerのみで使用可能にし、外部からのアクセスをなくす。
     def article_params
       params.require(:article).permit(:title, :body)
     end
 end
+
