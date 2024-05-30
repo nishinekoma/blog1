@@ -1,4 +1,6 @@
 class ArticlesController < ApplicationController
+  http_basic_authenticate_with name: "dhh", password: "secret",
+   except: [:index, :show]
   def index
     @articles = Article.all #Articleというモデル名　インスタンス変数＠articlesに代入
     p @articles #or puts @articles
@@ -47,7 +49,7 @@ class ArticlesController < ApplicationController
 
   private #ArticlesControllerのみで使用可能にし、外部からのアクセスをなくす。
     def article_params
-      params.require(:article).permit(:title, :body)
+      params.require(:article).permit(:title, :body, :status)
     end
 end
 
