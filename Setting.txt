@@ -2,9 +2,15 @@
 
 
 ログイン
-　　・ユーザー名
-　　・パスワード
-    
+　　・User
+      ・add_check duplication
+
+    ・Email
+      ・add_check regex
+      ・add_check duplication
+      
+　　・password
+      
     ・Google
     ・Gest
 
@@ -13,4 +19,52 @@
 　　・パスワード
 　　・確認用パスワード
 　　・Google
+
+フロー
+　・ログイン画面　
+　　　・サインアップのリンク有
+　・サインアップ画面
+　　　・ログイン画面のリンク有
+
+懸念事項
+NSSメンバーのみがblogの編集、削除をできるようにする
+　　NSSメンバー　：編集、削除
+　　　　　NSSメンバーの自分のblogのみをいじる。
+
+testdate
+tarou@example.com
+hogehoge
+
+memo login
+参考：https://qiita.com/d0ne1s/items/7c4d2be3f53e34a9dec7
+$ rails g model User name:string email:string password_digest:string
+      invoke  active_record
+      create    db/migrate/20240530185552_create_users.rb
+      create    app/models/user.rb
+      invoke    test_unit
+      create      test/models/user_test.rb
+      create      test/fixtures/users.yml
+
+$ rails db:migrate
+== 20240530185552 CreateUsers: migrating ======================================
+-- create_table(:users)
+   -> 0.0040s
+== 20240530185552 CreateUsers: migrated (0.0042s) =============================
+
+/home/nishinekma/work/Rails/blog/db/migrate/20240530185552_create_users.rb
+
+
+
+rails g controller Sessions new
+      create  app/controllers/sessions_controller.rb
+       route  get 'sessions/new'
+      invoke  erb
+      create    app/views/sessions
+      create    app/views/sessions/new.html.erb
+      invoke  test_unit
+      create    test/controllers/sessions_controller_test.rb
+      invoke  helper
+      create    app/helpers/sessions_helper.rb
+      invoke    test_unit
+
 

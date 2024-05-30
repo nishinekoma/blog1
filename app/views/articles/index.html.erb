@@ -13,4 +13,6 @@ Our blog has <%= Article.public_count %> articles and counting!
 </ul>
 
 <%= link_to "New Article", new_article_path %>
+
+<%= link_to "ログアウト", logout_path, method: :delete %>
 <p>Find me in app/views/articles/index.html.erb http://localhost:3000/articles</p>
