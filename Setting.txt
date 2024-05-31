@@ -2,13 +2,17 @@
 
 
 ログイン
-　　・User
-      ・add_check duplication
+    ・データ
+        ・User
+        ・add_check duplication
 
-    ・Email
-      ・add_check regex
-      ・add_check duplication
-      
+        ・Email
+        ・add_check regex
+        ・add_check duplication
+　　・失敗
+        ・失敗Validationを出す
+        　・Dupulicate
+
 　　・password
       
     ・Google

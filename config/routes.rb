@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   end
 
   #loginpage routes
-  get    '/login',   to: 'sessions#new'
+  get    '/login',   to: 'sessions#login'
   post   '/login',   to: 'sessions#create'
   
   get '/logout', to: 'sessions#destroy'

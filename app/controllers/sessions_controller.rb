@@ -1,10 +1,11 @@
 class SessionsController < ApplicationController
 
-  def new
+  def login
   end
 
   #ログインページから送信された情報を受け取り、ログイン処理を行う
   def create
+    #mail
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
       log_in user

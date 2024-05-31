@@ -54,6 +54,12 @@ DSL(Domain Specific Language) ドメイン固有言語　https://gihyo.jp/admin/
 
 ハードコーティング　：ソフトウェア開発においてソースコードに直接書き込む形でデータを挿入する行為を指す。
 
+Rails debug tools
+各デバックツールの概要　どんなのがあるか
+https://migisanblog.com/rails-debug-tool/
+
+
+
 /---*用語　ネット関係*---/
 リッスンアドレス　ポート番号を開いて外部からの接続を待っている状態。
 
