@@ -1,27 +1,26 @@
 class SessionsController < ApplicationController
 
-  def login
+  def login #View login.html.erb
   end
 
   #ログインページから送信された情報を受け取り、ログイン処理を行う
   def create
-    #mail
-    user = User.find_by(email: params[:session][:email].downcase)
-    if user && user.authenticate(params[:session][:password])
+    #Email comparison
+    user = User.find_by(email: params[:email].downcase)
+    if user && user.authenticate(params[:password])
       log_in user
       redirect_to root_url
-      p "aaaa"
+      p "login successed"
     else
-      flash[:danger] = 'Invalid email/password combination' # 本当は正しくない
-      render 'new'
-      p "bbbbbb"
+      render 'login'
+      p "login failed"
     end
   end
 
   #cookieに保存されたユーザーidを削除し、ログアウトを行う
   def destroy
     log_out if logged_in?
-    redirect_to root_url
+    redirect_to 'login'
   end
 
 end

@@ -39,3 +39,6 @@ html Generate helper method
 https://guides.rubyonrails.org/form_helpers.html#a-generic-search-form
  example 
  ・checkbox,form,radiobuttons,datefields
+
+error
+ https://waterlow2013.hatenablog.com/entry/2018/06/09/150640

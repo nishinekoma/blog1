@@ -1,0 +1,22 @@
+<h1>ログイン</h1>
+<!--post login route.rb-->
+<!--local: true :Ajaxではなく通常のHTTPリクエストとして送信される。-->
+<%= form_with(url: login_path, local: true) do |f| %>
+  <%= f.label :email %>
+  <%= f.email_field :email %>
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+  <%= f.submit "Log in" %>
+<% end %>
+
+<!-- 
+<h1>ログイン</h1>
+<%= form_with(model: @session, url: login_path, local: true) do |f| %>
+  <%= f.label :email %>
+  <%= f.email_field :email %>
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+  <%= f.submit "Log in" %>
+<% end %>
+-->
+<!--login view/articles/index.html.erb-->
