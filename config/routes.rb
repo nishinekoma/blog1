@@ -17,4 +17,11 @@ Rails.application.routes.draw do
   get '/signup', to: 'sessions#signup'
   post '/signup', to: 'sessions#new'
 
+  # #select routes
+  # get '/admin_decide', to: 'sessions#decide'
+  # post '/admin_decide', to: 'sessions#'
+
+  # #admin check routes
+  # get '/admin_check', to: 'sessions#'
+  # post '/admin_check', to: 'sessions#'
 end

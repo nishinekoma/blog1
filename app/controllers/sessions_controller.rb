@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
 
   #ログインページから送信された情報を受け取り、ログイン処理を行う
   def create
-    #Email comparison
+    #Email comparison .downcaseでEmailの大小を無視して比較する。
     user = User.find_by(email: params[:email].downcase)
     if user && user.authenticate(params[:password])
       log_in user
@@ -33,6 +33,8 @@ class SessionsController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
+        log_in @user
+        p  "decide user ********:" , @user
         redirect_to root_path, notice: 'Successfully created account'
       else
         p "failed signup"
@@ -43,5 +45,25 @@ class SessionsController < ApplicationController
     def user_params
       params.require(:user).permit(:email, :password, :password_confirmation)
     end
+  # --- check routes --- #
+    def decide
+      #現在のログイン中のユーザを格納
+      @user = current_user
+      p  "decide user : " , @user
+    end
 
+    def update_admin_role
+      admin_password = "adminpass" #admin authenticate word
+
+      # :admin_password : 入力されたパスワード
+      if params[:admin_password] == admin_password
+        @user.update_attribute(:role, 1)
+        p "update user" , @user
+        redirect_to root_path,  notice: '管理者に変更されました。'
+      else
+        flash[:notice] = "パスワードが違います。"
+        p "update failed" , @user
+        redirect_to admin_decide
+      end
+    end
 end
