@@ -26,7 +26,14 @@ bin/rails generate model Article title:string body:text
 
     モデル ファイル  　　app/models/article.rb です。　　　　　　　 //
 
+migrate file 移行ファイルの追加　schema とかの追加
+https://qiita.com/azusanakano/items/a2847e4e582b9a627e3a
+rails g migration AddRoletoUsers role:string
+Addカラム名toテーブル名　カラム名：型
+bin/rails db:migrate
 
+migratefile 削除
+https://qiita.com/ISSO33/items/33a935cb3255c269bef2
 
 public Document Temprary memo
 Ruby DSL　https://qiita.com/getty104/items/b3fcc1f86846fb86f168

@@ -1,6 +1,4 @@
 
-
-
 ログイン
     ・データ
         ・User
@@ -24,12 +22,20 @@
 　　・確認用パスワード
 　　・Google
 
+
 フロー
 　・ログイン画面　
 　　　・サインアップのリンク有
+
 　・サインアップ画面
 　　　・ログイン画面のリンク有
+　　↓
+　　・サインアップ後　NSSメンバーか確認画面
+　　　　　・Yes ブログを作れる権限を付与
+　　　　　　　　　ロール名　（部長(top_role)・副部長(sidetop_role)・NSSメンバー(member_role)）　：プルダウンで選択させる。
 
+　　　　　・No　一般ユーザ
+            　ロール名（一般ユーザ General_role）
 懸念事項
 NSSメンバーのみがblogの編集、削除をできるようにする
 　　NSSメンバー　：編集、削除
@@ -71,4 +77,6 @@ rails g controller Sessions new
       create    app/helpers/sessions_helper.rb
       invoke    test_unit
 
-
+memo singup
+https://www.geeksforgeeks.org/create-a-user-signup-form-with-email-using-ruby-on-rails/
+https://zenn.dev/yusuke_docha/articles/89b49fd29c16c6#enum_help%E3%81%AE%E5%B0%8E%E5%85%A5
