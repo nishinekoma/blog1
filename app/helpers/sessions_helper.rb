@@ -31,5 +31,4 @@ module SessionsHelper
   end
 
 # --- singup function --- #
-
 end

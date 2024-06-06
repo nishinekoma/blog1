@@ -3,6 +3,13 @@
 <%= form_with model: @user, url: signup_path do |form| %>
 
    <div class="mb-3">
+     <%= form.label :name, "Name" %>
+    
+     <%= form.text_field :name, class: "form-control",
+        placeholder: "Enter your name" %>
+
+   </div>
+   <div class="mb-3">
 
      <%= form.label :email, "Email" %>
 

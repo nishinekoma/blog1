@@ -17,11 +17,12 @@ Rails.application.routes.draw do
   get '/signup', to: 'sessions#signup'
   post '/signup', to: 'sessions#new'
 
-  # #select routes
-  # get '/admin_decide', to: 'sessions#decide'
-  # post '/admin_decide', to: 'sessions#'
+  #select routes
+  get '/admin_decide', to: 'sessions#decide'
+  # 受け取るだけなので多分POSTはいらない？
+  post '/admin_decide', to: 'sessions#decide'
 
-  # #admin check routes
-  # get '/admin_check', to: 'sessions#'
-  # post '/admin_check', to: 'sessions#'
+  #admin check routes
+  get '/admin_check', to: 'sessions#admin_check'
+  post '/admin_check', to: 'sessions#admin_check'
 end

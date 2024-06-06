@@ -1,8 +1,8 @@
 
 ログイン
     ・データ
-        ・User
-        ・add_check duplication
+        ・name
+         ・add_check duplication
 
         ・Email
         ・add_check regex
@@ -19,7 +19,7 @@
 サインアップ　
 　　・ユーザー名
 　　・パスワード
-　　・確認用パスワード
+　　・確認用パスワード　#一時的に使用。
 　　・Google
 
 
@@ -35,7 +35,7 @@
 　　　　　　　　　ロール名　（部長(top_role)・副部長(sidetop_role)・NSSメンバー(member_role)）　：プルダウンで選択させる。
 
 　　　　　・No　一般ユーザ
-            　ロール名（一般ユーザ General_role）
+            　　ロール名（一般ユーザ General_role）
 懸念事項
 NSSメンバーのみがblogの編集、削除をできるようにする
 　　NSSメンバー　：編集、削除
@@ -80,3 +80,11 @@ rails g controller Sessions new
 memo singup
 https://www.geeksforgeeks.org/create-a-user-signup-form-with-email-using-ruby-on-rails/
 https://zenn.dev/yusuke_docha/articles/89b49fd29c16c6#enum_help%E3%81%AE%E5%B0%8E%E5%85%A5
+
+
+
+/---*改良の確認*---/
+    #基本　改良　で検索。
+    ・session_controller.rb
+
+/---**---/
