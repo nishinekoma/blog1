@@ -14,13 +14,16 @@
 　　・password
       
     ・Google
-    ・Gest
+      ・Gest
 
 サインアップ　
 　　・ユーザー名
 　　・パスワード
 　　・確認用パスワード　#一時的に使用。
 　　・Google
+
+    ・Google
+      ・Gest
 
 
 フロー
@@ -29,6 +32,7 @@
 
 　・サインアップ画面
 　　　・ログイン画面のリンク有
+        ・NameとEmailにcustom validation message を設定。 User.rb
 　　↓
 　　・サインアップ後　NSSメンバーか確認画面
 　　　　　・Yes ブログを作れる権限を付与
@@ -88,3 +92,4 @@ https://zenn.dev/yusuke_docha/articles/89b49fd29c16c6#enum_help%E3%81%AE%E5%B0%8
     ・session_controller.rb
 
 /---**---/
+

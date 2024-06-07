@@ -49,3 +49,10 @@ https://guides.rubyonrails.org/form_helpers.html#a-generic-search-form
 
 error
  https://waterlow2013.hatenablog.com/entry/2018/06/09/150640
+
+# Rails による完全にカスタマイズされた検証エラーメッセージ
+Fully custom validation error message with Rails
+https://stackoverflow.com/questions/808547/fully-custom-validation-error-message-with-rails
+
+    password の場合は特殊 has_secure_password入れてる場合のやつね　: stack overflow link is 
+    https://stackoverflow.com/questions/17116696/password-cant-be-blank-displayed-twice

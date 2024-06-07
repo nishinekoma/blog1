@@ -23,10 +23,10 @@ class SessionsController < ApplicationController
     redirect_to login_path, allow_other_host: true
   end
 
-  #private
-    def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
-    end
+  # #private
+  #   def user_params
+  #     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  #   end
 # --- singup function --- #
   def signup #View signup.html.erb
     @user = User.new #Userのモデルオブジェクトを生成
@@ -43,9 +43,10 @@ class SessionsController < ApplicationController
       else
         p "failed signup"
         p @user.errors.full_messages # エラー出力’
-        render :signup, notice: 'Failed to creat account'
+        render :signup, status: :unprocessable_entity
     end
   end
+
   def update_admin_role
     p "update_admin_role colled"
     admin_password = "adminpass" #admin authenticate word
@@ -58,18 +59,17 @@ class SessionsController < ApplicationController
       p "update user" , @user
       redirect_to root_path, notice: '管理者に変更されました。'
     else
-      flash[:notice] = "パスワードが違います。NSSメンバーでない場合ゲストを選択してください。"
       p "update failed" , @user
-      #dateの更新がないため、renderのほうがいいかも 改良
+      #エラーメッセージ表示のため redirect_to を使用。
       redirect_to admin_decide_path
     end
   end
   
   # --- check routes --- #
     def decide
-      # # decide.html.erb を表示
-      #現在のログイン中のユーザを格納
-      # @user = current_user
+      # decide.html.erb を表示
+      # 現在のログイン中のユーザを格納
+      # @user = current_user debug
       p  "decide user : " , @user
     end
 
@@ -82,12 +82,17 @@ class SessionsController < ApplicationController
         update_admin_role
       else
         p "update failed user"
-        flash[:notice] = "パスワードが違います。NSSメンバーでない場合ゲストを選択してください。"
-        render :admin_check
+        @user = current_user
+        @user.errors.add(:admin_password, "NSSメンバーでない方はregularからログインしてください。<br>パスワードが一致しません。")
+        render :admin_check, status: :unprocessable_entity
       end
     end
     # private
     #   def user_params
     #     params.require(:user).permit(:name, :email, :password, :password_confirmation)
     #   end
+    private
+      def user_params
+        params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      end
 end
