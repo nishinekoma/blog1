@@ -91,5 +91,9 @@ https://zenn.dev/yusuke_docha/articles/89b49fd29c16c6#enum_help%E3%81%AE%E5%B0%8
     #基本　改良　で検索。
     ・session_controller.rb
 
-/---**---/
+/---* todo *---/
+.envファイルを使用する: パスワードなどの機密情報を含む.envファイルを作成し、アプリケーションからはこのファイルを読み取ります。.envファイルは通常、.gitignoreに含まれ、GitHubなどの公開リポジトリには含まれません。
+この方法でいきます。
 
+google button custom doc 
+https://developers.google.com/identity/gsi/web/reference/html-reference?hl=ja

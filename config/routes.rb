@@ -6,6 +6,8 @@ Rails.application.routes.draw do
       resources :comments#登録されている記事などのリソースのコレクションをすべてマップ
   end
 
+
+
   #loginpage routes
   get    '/login',   to: 'sessions#login' #request http://localhost:3000/login to sessions_controller  def login
   post   '/login',   to: 'sessions#create'
@@ -13,6 +15,10 @@ Rails.application.routes.draw do
   get '/logout', to: 'sessions#destroy'
   delete '/logout',  to: 'sessions#destroy'
 
+  #google API login
+  post '/google_login_api/callback', to: 'google_login_api#callback'
+
+  
   #signup routes
   get '/signup', to: 'sessions#signup'
   post '/signup', to: 'sessions#new'

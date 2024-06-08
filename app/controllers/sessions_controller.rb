@@ -87,10 +87,7 @@ class SessionsController < ApplicationController
         render :admin_check, status: :unprocessable_entity
       end
     end
-    # private
-    #   def user_params
-    #     params.require(:user).permit(:name, :email, :password, :password_confirmation)
-    #   end
+    
     private
       def user_params
         params.require(:user).permit(:name, :email, :password, :password_confirmation)

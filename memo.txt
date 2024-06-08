@@ -55,4 +55,22 @@ Fully custom validation error message with Rails
 https://stackoverflow.com/questions/808547/fully-custom-validation-error-message-with-rails
 
     password の場合は特殊 has_secure_password入れてる場合のやつね　: stack overflow link is 
-    https://stackoverflow.com/questions/17116696/password-cant-be-blank-displayed-twice
+    https://stackoverflow.com/questions/17116696/password-cant-be-blank-displayed-twice\
+
+/---*改良の確認*---/
+https://developers.google.com/identity/gsi/web/reference/html-reference?hl=ja
+
+/---*to do after git pull *---/
+
+sudo gem install ruby-lsp
+sudo bundle install // gem googleauth
+
+/---*to do Read this　 *---/
+What is JWTクレーム　JSON Web Token
+https://supertokens.com/blog/what-is-jwt
+
+What is ESP(Extensible Service Proxy) . image link
+https://www.google.com/search?sca_esv=59bba6956f58be63&rlz=1C1TKQJ_jaJP1030JP1030&q=What+is+Extensible+Service+Proxy&uds=ADvngMjKpjapqO9SxPG75y7O6MClm1s47mr8HJICagJOwE5kKh9jApfxrlrvoprbhkQ-IcRXQ9PvJXafUH16FK7ZZML0Zsh5-w8-WqGPvsAptHmqR4u2VaG_DIhlx2Lh7z8RpLTohcmZt3NIPDoDrPbUbi9dIN_ddNl_1V-J-rrF4KB3xl2-Nok7Yx2flmim3uPlRcv5B5cmVS_xMaJsKKTC0a-TfDdswsDFwixOoMCa6IstEAYRzlRVZPaajInOFewMcF78PmxVY4EFmueCCzoaflIQxRpsKSTfKDUOOqvXvJrvvMxYg6_Axy75Ylwk9wj1P1mJB6WHvZvZASciHNUUejfAckzk3CQmKyAQ06RkS4DQ-nSzkHj3lxZdl9iVOtNg9X3aj_Sa_iTLh5Glkl-MrfmcTXsQEQ&udm=2&prmd=ivsnbmtz&sa=X&ved=2ahUKEwj0iYzzhsyGAxXTafUHHWGdAcMQtKgLegQICRAB&biw=1145&bih=859&dpr=1.5#vhid=6FkkP930hcyVXM&vssid=mosaic
+
+
+What is ESP
