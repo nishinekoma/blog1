@@ -153,3 +153,9 @@ https://zenn.dev/yusuke_docha/articles/89b49fd29c16c6#enum_help%E3%81%AE%E5%B0%8
 google button custom doc 
 https://developers.google.com/identity/gsi/web/reference/html-reference?hl=ja
 
+
+
+
+
+User.find_by(email: "nishi.kazu2488@gmail.com")
+User.where(email: "nishi.kazu2488@gmail.com").destroy_all

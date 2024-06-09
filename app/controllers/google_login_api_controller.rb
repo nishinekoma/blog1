@@ -10,7 +10,9 @@ class GoogleLoginApiController < ApplicationController
   
     def callback
       # 発行されたAPIを確認し格納する。　
+      p params[:credential]
       payload = Google::Auth::IDTokens.verify_oidc(params[:credential], aud: ENV['GOOGLE_CLIENT_ID'])
+      p "decoded payload is " , payload
       # find_or_create_by 引数の条件に該当するデータを見つける。
       user = User.find_or_create_by(email: payload['email'])
       # Userモデルからid を見つけログインしているユーザとして session に保存
