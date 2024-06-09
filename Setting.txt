@@ -1,3 +1,9 @@
+pull したらやること　
+　　Desktop
+　
+　　notePC sudo bundle install  :gem 'dotenv-rails'
+          https://qiita.com/rarrrrsQ/items/1b1277499819659e5601
+
 
 ログイン
     ・データ
@@ -25,6 +31,11 @@
     ・Google
       ・Gest
 
+
+ログイン後
+　User custom
+    ・自身のプロフィール画像を挙げれるようにする。
+    　・なければデフォルトのまま。ログイン後に登録。
 
 フロー
 　・ログイン画面　
@@ -87,6 +98,22 @@ https://zenn.dev/yusuke_docha/articles/89b49fd29c16c6#enum_help%E3%81%AE%E5%B0%8
 
 
 
+フィルターをかけてblog機能
+　　General
+          ・見る権限とコメントする権限を持つ。
+          ・自身の作成したコメントを編集・削除する権限を持つ。
+    admin1 
+          ・signupした瞬間に 自身のblog の場所が作られる。
+          ・作るごとに横に追加していく。　
+          ・自身のブログの削除、編集、クリエイトの権限を持つ。
+          ・コメントの削除の権限のみを持つ。
+　　admin2 
+          ・全てのblogの削除、追加、編集の権限を持つ。
+          ・全てのコメント操作の権限をもつ。
+
+    temprary memo:　GPTにより良いコードがないか聞く。（冗長の削除の提案
+    　　　　　　　　 コードレビュー目的でしてもらう。
+
 /---*改良の確認*---/
     #基本　改良　で検索。
     ・session_controller.rb
@@ -116,7 +143,7 @@ https://zenn.dev/yusuke_docha/articles/89b49fd29c16c6#enum_help%E3%81%AE%E5%B0%8
  google API chage API料金について
  　・1day/10,000　回まで　
 　　　https://cloud.google.com/api-gateway/pricing?hl=ja
-   ・nssblog OAuth　同意が麺
+   ・nssblog OAuth　同意がひつようなやつと　認証情報で許可できるURIカスタマイズ
       https://console.cloud.google.com/apis/credentials/consent?hl=ja&project=nssblog&supportedpurview=project
    ・NSS　クライアントID　等　audに設定する値
   　  https://console.cloud.google.com/apis/credentials/oauthclient/537001528197-mibeq2ma6aep3ismhd4buk6jjc62jd6t.apps.googleusercontent.com?hl=ja&project=nssblog&supportedpurview=project

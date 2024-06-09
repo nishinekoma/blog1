@@ -30,5 +30,5 @@ Rails.application.routes.draw do
 
   #admin check routes
   get '/admin_check', to: 'sessions#admin_check'
-  post '/admin_check', to: 'sessions#admin_check'
+  post '/admin_check', to: 'sessions#update_admin_role'
 end

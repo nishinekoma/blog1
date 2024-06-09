@@ -49,19 +49,21 @@ class SessionsController < ApplicationController
 
   def update_admin_role
     p "update_admin_role colled"
-    admin_password = "adminpass" #admin authenticate word
+    admin_password = ENV['ADMIN_PASSWORD'] #admin authenticate word
     #現在のユーザ返す
     @user = current_user
     # :admin_password : 入力されたパスワード
-    if params[:admin_password] == admin_password
+    if params[:admin_password] == ENV['ADMIN_PASSWORD']
       p "update user" , @user
       @user.update_attribute(:role, 1)
       p "update user" , @user
       redirect_to root_path, notice: '管理者に変更されました。'
     else
       p "update failed" , @user
-      #エラーメッセージ表示のため redirect_to を使用。
-      redirect_to admin_decide_path
+      #エラーメッセージ表示
+      @user = current_user
+      @user.errors.add(:admin_password, "パスワードが一致しません。<br>NSSメンバーでない方はregularからログインしてください。")
+      render :admin_check , status: :unprocessable_entity
     end
   end
   
@@ -76,18 +78,10 @@ class SessionsController < ApplicationController
     def admin_check
       p "admin_check         dafafafdafsfsafsdfadfsafasdf"
       ## admin_check.html.erb を表示
-      ## postでsessions_helperからメソッド呼び出し管理者判定
-      if params[:admin_password] == "adminpass" # パスワードの比較
-        p "update user"
-        update_admin_role
-      else
-        p "update failed user"
-        @user = current_user
-        @user.errors.add(:admin_password, "NSSメンバーでない方はregularからログインしてください。<br>パスワードが一致しません。")
-        render :admin_check, status: :unprocessable_entity
-      end
+      ## postで管理者判定 update_admin_role
+      @user = current_user
     end
-    
+
     private
       def user_params
         params.require(:user).permit(:name, :email, :password, :password_confirmation)
