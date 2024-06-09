@@ -28,4 +28,12 @@ class GoogleLoginApiController < ApplicationController
       end
     end
 
+    #    ---- signup ----  
+    def signup_callback
+        #　発行されたAPIを確認し格納
+        payload = Google::Auth::IDTokens.verify_oidc(params[:credential], aud: ENV['GOOGLE_CLIENT_ID'])
+
+        #
+    end
+
 end
