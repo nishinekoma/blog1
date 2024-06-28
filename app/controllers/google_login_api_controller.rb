@@ -21,6 +21,22 @@ class GoogleLoginApiController < ApplicationController
       redirect_to root_path, notice: 'ログインしました'
     end
   
+
+
+
+        #    ---- signup ----  
+        def signup_callback
+          #　Userのモデルオブジェクトを生成
+          @user = User.new 
+          #　発行されたAPIを確認し復元し格納
+          payload = Google::Auth::IDTokens.verify_oidc(params[:credential], aud: ENV['GOOGLE_CLIENT_ID'])
+
+          #　ユーザ作成
+          @user = User.new(payload['name'], payload['email'], )
+        end
+
+
+        #    ---- private method ---- 
     #befo_action によりaction前に検証が実行される。
     private
     def verify_g_csrf_token
@@ -29,13 +45,4 @@ class GoogleLoginApiController < ApplicationController
         redirect_to login_path, notice: '不正なアクセスです'
       end
     end
-
-    #    ---- signup ----  
-    def signup_callback
-        #　発行されたAPIを確認し格納
-        payload = Google::Auth::IDTokens.verify_oidc(params[:credential], aud: ENV['GOOGLE_CLIENT_ID'])
-
-        #
-    end
-
 end

@@ -29,7 +29,9 @@ class SessionsController < ApplicationController
   #   end
 # --- singup function --- #
   def signup #View signup.html.erb
-    @user = User.new #Userのモデルオブジェクトを生成
+    #Userのモデルオブジェクトを生成
+    @user = User.new 
+    p @user
   end
 
   def new
@@ -84,6 +86,7 @@ class SessionsController < ApplicationController
 
     private
       def user_params
+        p params
         params.require(:user).permit(:name, :email, :password, :password_confirmation)
       end
 end
