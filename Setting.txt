@@ -159,3 +159,9 @@ https://developers.google.com/identity/gsi/web/reference/html-reference?hl=ja
 
 User.find_by(email: "nishi.kazu2488@gmail.com")
 User.where(email: "nishi.kazu2488@gmail.com").destroy_all
+DBから削除
+User.destroy_all
+DB関連情報初期化　db init
+bin/rails db:reset #db/migrate/seeds.rb で初期値で入力される値を設定する。
+
+

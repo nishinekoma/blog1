@@ -21,8 +21,15 @@ bin/rails generate model Article title:string body:text
           DBから取得
           ・Article.find(1)
           ・Article.all　　　//すべて取得
+          DBから削除
+          ・User.destroy_all
           対話終了
           ・exit
+          
+Ruby の exit と exit! の違い
+https://qiita.com/siman/items/c9eb9641a6183ee23b7c
+
+
 
     モデル ファイル  　　app/models/article.rb です。　　　　　　　 //
 

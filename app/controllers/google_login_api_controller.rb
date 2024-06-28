@@ -4,7 +4,7 @@ class GoogleLoginApiController < ApplicationController
     require 'googleauth/id_tokens/verifier'
   
     #Rails doc ：CSRF対策の設定 :except(除く)　	実行しないアクション
-    protect_from_forgery except: :callback
+    protect_from_forgery except: [:callback, :signup_callback]
     #Rails doc: アクション前に処理を実行。　
     before_action :verify_g_csrf_token
   
@@ -37,7 +37,7 @@ class GoogleLoginApiController < ApplicationController
       @user = User.new(
         name: payload['name'], 
         email: payload['email'],
-        password: generate_password,
+        password: generated_password,
         password_confirmation: generated_password
         )
       
