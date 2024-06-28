@@ -5,8 +5,9 @@ class SessionsController < ApplicationController
 
   #ログインページから送信された情報を受け取り、ログイン処理を行う
   def create
-    #Email comparison .downcaseでEmailの大小を無視して比較する。
+    #Email comparison .downcaseでEmailの大小を無視して比較する。 存在しなければnil
     user = User.find_by(email: params[:email].downcase)
+    # userが存在する(nil)でない　かつ　パスワードが正しいか比較
     if user && user.authenticate(params[:password])
       log_in user
       redirect_to root_url

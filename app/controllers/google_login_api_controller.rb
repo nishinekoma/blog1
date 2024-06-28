@@ -24,16 +24,35 @@ class GoogleLoginApiController < ApplicationController
 
 
 
-        #    ---- signup ----  
-        def signup_callback
-          #　Userのモデルオブジェクトを生成
-          @user = User.new 
-          #　発行されたAPIを確認し復元し格納
-          payload = Google::Auth::IDTokens.verify_oidc(params[:credential], aud: ENV['GOOGLE_CLIENT_ID'])
-
-          #　ユーザ作成
-          @user = User.new(payload['name'], payload['email'], )
-        end
+    #    ---- signup ----  
+    def signup_callback
+      p "signup_callback stated "
+      #　Userのモデルオブジェクトを生成
+      @user = User.new 
+      #　発行されたAPIを確認し復元し格納
+      payload = Google::Auth::IDTokens.verify_oidc(params[:credential], aud: ENV['GOOGLE_CLIENT_ID'])
+      #ランダムpassword生成
+      generated_password = SecureRandom.hex(10)
+      #　ユーザ作成
+      @user = User.new(
+        name: payload['name'], 
+        email: payload['email'],
+        password: generate_password,
+        password_confirmation: generated_password
+        )
+      
+        if @user.save
+          log_in @user
+          p  "google api user succssed" , @user
+          redirect_to "/admin_decide", notice: 'Successfully to create account'
+          #redirect_to root_path, notice: 'Successfully created account'
+        else
+          p "failed signup"
+          p @user.errors.full_messages # エラー出力’
+          render :signup, status: :unprocessable_entity
+      end
+      
+    end
 
 
         #    ---- private method ---- 
@@ -44,5 +63,6 @@ class GoogleLoginApiController < ApplicationController
       if cookies["g_csrf_token"].blank? || params[:g_csrf_token].blank? || cookies["g_csrf_token"] != params[:g_csrf_token]
         redirect_to login_path, notice: '不正なアクセスです'
       end
+
     end
 end
