@@ -25,7 +25,7 @@ bin/rails generate model Article title:string body:text
           ・User.destroy_all
           対話終了
           ・exit
-          
+
 Ruby の exit と exit! の違い
 https://qiita.com/siman/items/c9eb9641a6183ee23b7c
 
@@ -85,3 +85,11 @@ What is ESP
 ユースケース　活用事例　
 システムを使う人の目線で「このシステムは、こんなことができるのね」を
 表現してみることで、どんなシステムになるかのイメージをつかむやり方
+
+
+Ruby extends for vscode
+https://zenn.dev/code_journey_ys/articles/77adcf112a1ea1
+
+#ruby-rubocop //not working in wsl2. Use Solargraph as an alternative.　代替えとしてSolargraphを使用する。
+Ruby Solargraph
+endwise

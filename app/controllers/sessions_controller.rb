@@ -21,6 +21,7 @@ class SessionsController < ApplicationController
   #cookieに保存されたユーザーidを削除し、ログアウトを行う
   def destroy
     log_out if logged_in?
+    #allow 
     redirect_to login_path, allow_other_host: true
   end
 
@@ -37,17 +38,9 @@ class SessionsController < ApplicationController
 
   def new
     @user = User.new(user_params)
-
-    if @user.save
-        log_in @user
-        p  "decide user ********:" , @user
-        redirect_to "/admin_decide", notice: 'Successfully to create account'
-        #redirect_to root_path, notice: 'Successfully created account'
-      else
-        p "failed signup"
-        p @user.errors.full_messages # エラー出力’
-        render :signup, status: :unprocessable_entity
-    end
+    
+    #ユーザ情報登録処理開始　sessions_helper.rb
+    user_save(@user)
   end
 
   def update_admin_role
@@ -79,7 +72,7 @@ class SessionsController < ApplicationController
     end
 
     def admin_check
-      p "admin_check         dafafafdafsfsafsdfadfsafasdf"
+      p "admin_check started"
       ## admin_check.html.erb を表示
       ## postで管理者判定 update_admin_role
       @user = current_user
@@ -90,4 +83,5 @@ class SessionsController < ApplicationController
         p params
         params.require(:user).permit(:name, :email, :password, :password_confirmation)
       end
+      
 end

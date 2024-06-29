@@ -31,4 +31,23 @@ module SessionsHelper
   end
 
 # --- singup function --- #
+  #渡されたuserの登録処理を開始する。　registration process　登録処理
+  def user_save(user)
+    #DBに登録開始
+    if @user.save
+      p "Success user.save"
+      #user_idを格納してsession情報を登録
+      log_in @user
+      #メッセージを表示
+      flash[:notice] = "Successfully to create account"
+      p  "User information :" , @user
+      redirect_to "/admin_decide"
+      #redirect_to root_path, notice: 'Successfully created account'
+    else
+      p "failed user.save"
+      p @user.errors.full_messages # [debug] エラー出力
+      render 'sessions/signup', status: :unprocessable_entity
+    end
+  end
+
 end

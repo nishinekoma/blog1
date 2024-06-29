@@ -15,8 +15,8 @@ class GoogleLoginApiController < ApplicationController
       p "decoded payload is " , payload
       # find_or_create_by 引数の条件に該当するデータを見つける。
       user = User.find_or_create_by(email: payload['email'])
-      # Userモデルからid を見つけログインしているユーザとして session に保存
-      session[:user_id] = user.id
+      # Userモデルからid を見つけログインしているユーザとして session に保存 sessions_helper
+      log_in user
       # redirect_to で、　コントローラcontroller　→　URL　→　route　→　controller　→　view　遷移する。
       redirect_to root_path, notice: 'ログインしました'
     end
@@ -41,17 +41,8 @@ class GoogleLoginApiController < ApplicationController
         password_confirmation: generated_password
         )
       
-        if @user.save
-          log_in @user
-          p  "google api user succssed" , @user
-          redirect_to "/admin_decide", notice: 'Successfully to create account'
-          #redirect_to root_path, notice: 'Successfully created account'
-        else
-          p "failed signup"
-          p @user.errors.full_messages # エラー出力’
-          render :signup, status: :unprocessable_entity
-      end
-      
+      #ユーザ情報登録処理開始　sessions_helper.rb
+      user_save(@user)
     end
 
 
