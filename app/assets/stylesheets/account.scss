@@ -1,0 +1,59 @@
+/* account information style */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f8f9fa; /* Optional: Add background color */
+  border-bottom: 1px solid #ddd; /* Optional: Add bottom border */
+}
+
+.title {
+  flex-grow: 1; /* Allow title to take up remaining space */
+}
+
+.user-information-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.user-information {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Align text and button to the right */
+}
+
+.logout {
+  margin-top: 5px; /* Optional: Add space between user info and logout */
+}
+
+/* user icon */
+.user {
+  display: inline-block;
+  position: relative;
+  border-radius: 50%;
+  background-color: #89baeb;
+  width: 0.1em;
+  height: 1em;
+  font-size: 200px;
+  overflow: hidden;
+}
+.user::before,
+.user::after {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background-color: #3388dd;
+  content: "";
+}
+.user::before {
+  top: 0.15em;
+  width: 0.4em;
+  height: 0.4em;
+}
+.user::after {
+  bottom: -0.4em;
+  width: 0.8em;
+  height: 0.8em;
+}

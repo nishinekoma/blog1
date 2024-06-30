@@ -90,6 +90,19 @@ What is ESP
 Ruby extends for vscode
 https://zenn.dev/code_journey_ys/articles/77adcf112a1ea1
 
-#ruby-rubocop //not working in wsl2. Use Solargraph as an alternative.　代替えとしてSolargraphを使用する。
-Ruby Solargraph
-endwise
+/---*　拡張機能　 *---/
+    ruby and rails
+        #ruby-rubocop //not working in wsl2. Use Solargraph as an alternative.　代替えとしてSolargraphを使用する。
+        Ruby Solargraph
+        endwise
+
+
+    html and css 
+        https://www.youtube.com/watch?v=AxfjMZbLifQ
+
+        HTML CSS Support
+        Auto Rename Tag
+
+
+        便利複製したい行にクリック
+        Alt shift arrow

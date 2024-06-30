@@ -1,5 +1,26 @@
-<h1>Articles</h1>
+
   <% if logged_in? %><!--login 必須にする--->
+    <!--logged user -->
+<header>
+  <div class="title">
+    <h1>Articles</h1>
+  </div>
+<div class="user-information-wrapper">
+  <button class="user-information">
+    <div class="item__header clearfix">
+      <span class="item__user-icon">
+        <%= image_tag 'image.png', height: '48', width: '64', alt: 'ジバニャン', class: 'item__user-icon-img' %>
+      </span>
+      <span class="item__user-name">
+        <strong>ジバニャン</strong>
+      </span>
+      <span class="item__date">
+        2014/08/29 19:00
+      </span>
+    </div>
+  </button>
+</div>
+</header>
   Our blog has <%= Article.public_count %> articles and counting!
 
   <ul>
@@ -14,7 +35,6 @@
 
   <%= link_to "New Article", new_article_path %>
 
-  <%= link_to "ログアウト", logout_path, method: :delete %>
   <p>Find me in app/views/articles/index.html.erb http://localhost:3000/articles</p>
 <% else %>
     <%= render 'sessions/login' %>

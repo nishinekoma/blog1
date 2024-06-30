@@ -54,6 +54,8 @@ end
 # add dotenv-gem 環境変数を .env から ENV にロードするための Shim。 [https://github.com/bkeepers/dotenv#customizing-rails]
 gem 'dotenv-rails'
 
+#add sassc (css)
+gem "sassc-rails"
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"

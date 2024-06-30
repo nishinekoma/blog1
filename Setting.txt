@@ -20,7 +20,6 @@ pull したらやること　
 　　・password
       
     ・Google
-      ・Gest
 
 サインアップ　
 　　・ユーザー名
@@ -29,7 +28,6 @@ pull したらやること　
 　　・Google
 
     ・Google
-      ・Gest
 
 
 ログイン後
