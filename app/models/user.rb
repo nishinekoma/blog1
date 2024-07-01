@@ -1,4 +1,10 @@
 class User < ApplicationRecord
+  #  --- user dependencies --- #
+
+    has_many :articles, dependent: :destroy
+
+
+  #  --- user  validations --- #
     #secure 安全な
     has_secure_password validations: false
 

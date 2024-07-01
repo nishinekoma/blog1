@@ -30,10 +30,13 @@ pull したらやること　
     ・Google
 
 
-ログイン後
+ログイン後 フロー参照
 　User custom
     ・自身のプロフィール画像を挙げれるようにする。
     　・なければデフォルトのまま。ログイン後に登録。
+
+  role 1
+
 
 フロー
 　・ログイン画面　
@@ -43,12 +46,27 @@ pull したらやること　
 　　　・ログイン画面のリンク有
         ・NameとEmailにcustom validation message を設定。 User.rb
 　　↓
-　　・サインアップ後　NSSメンバーか確認画面
+　　・サインアップ後　NSSメンバーか確認画面(role1 and NSSmenber)
 　　　　　・Yes ブログを作れる権限を付与
-　　　　　　　　　ロール名　（部長(top_role)・副部長(sidetop_role)・NSSメンバー(member_role)）　：プルダウンで選択させる。
+
+
+
+　　・ログイン後
+    ・自身の作ったarticleのみ　編集、削除
+      ・(role1 && email == user.email)
+			  ・1userにつき複数のaricleを持つ
+						user 
+							has_many article
+		article Add a comment:
+		commenter 
+		  ログイン中の　user.name
+				
+
 
 　　　　　・No　一般ユーザ
             　　ロール名（一般ユーザ General_role）
+
+    
 懸念事項
 NSSメンバーのみがblogの編集、削除をできるようにする
 　　NSSメンバー　：編集、削除
@@ -162,4 +180,11 @@ User.destroy_all
 DB関連情報初期化　db init
 bin/rails db:reset #db/migrate/seeds.rb で初期値で入力される値を設定する。
 
+外部キー制約の概要
+https://qiita.com/SLEAZOIDS/items/d6fb9c2d131c3fdd1387
+他のテーブルのデータに参照（依存）するようにカラムにつける制約
+
+
+rails generate migration AddUserIdToArticles user:references
+bin/rails db:migrate
 

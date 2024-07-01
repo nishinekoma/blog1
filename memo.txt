@@ -93,7 +93,7 @@ https://zenn.dev/code_journey_ys/articles/77adcf112a1ea1
 /---*　拡張機能　 *---/
     ruby and rails
         #ruby-rubocop //not working in wsl2. Use Solargraph as an alternative.　代替えとしてSolargraphを使用する。
-        Ruby Solargraph
+        sudo install Solargraph
         endwise
 
 
