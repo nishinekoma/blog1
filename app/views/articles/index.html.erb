@@ -1,45 +1,52 @@
 <% if logged_in? %><!--login 必須にする--->
-    <!--logged user -->
-<header>
-  <div class="title">
-    <p>Articles</p>
-  </div>
-<div class="user-information-wrapper">
-  <button class="user-information">
-    <div class="item__header">
-      <div class="icon">
-        <span class="item__user-icon">
-          <%= image_tag 'image.png', height: '48', width: '64', alt: 'user', class: 'item__user-icon-img' %>
-        </span>
-      </div>
-      <div class="user_name_time">
-        <div>
-          <span class="item__name user">
-            <strong><br>ジバニャン<br></strong><!--強調表示-->
+      <!--logged user -->
+  <header>
+    <div class="title">
+      <p>Articles</p>
+    </div>
+  <div class="user-information-wrapper">
+    <button class="user-information">
+      <div class="item__header">
+        <div class="icon">
+          <span class="item__user-icon">
+            <%= image_tag 'image.png', height: '48', width: '64', alt: 'user', class: 'item__user-icon-img' %>
           </span>
         </div>
-        <span class="item__date user">
-          2014/08/29 19:00
-        </span>
-    </div>
-  </button>
-</div>
-</header>
-  Our blog has <%= Article.public_count %> articles and counting!
+        <div class="user_name_time">
+          <div>
+            <span class="item__name user">
+              <strong><br>ジバニャン<br></strong><!--強調表示-->
+            </span>
+          </div>
+          <span class="item__date user">
+            2014/08/29 19:00
+          </span>
+      </div>
+    </button>
+  </div>
+  </header>
+    Our blog has <%= Article.public_count %> articles and counting!
 
-  <ul>
-    <% @articles.each do |article| %>
-      <% unless article.archived? %>
-        <li>
-          <%= link_to article.title, article %>
-        </li>
-      <% end %>
+  <!--role 1 のuserに関連付けられたblogを出す-->
+  <% @users.each do |user| %>
+    <h2><%= user.name %></h2>
+    <h5><%= puts user.articles.exists?(:articles) %> </h5>
+    <% if user.articles.any? %>
+      <ul>
+        <% user.articles.each do |article| %>
+          <% unless article.archived? %>
+            <li>
+              <%= link_to article.title, article %>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
     <% end %>
-  </ul>
+  <% end %>
 
-  <%= link_to "New Article", new_article_path %>
-  <%= link_to "ログアウト", logout_path, method: :delete %>
-  <p>Find me in app/views/articles/index.html.erb http://localhost:3000/articles</p>
+    <%= link_to "New Article", new_article_path %>
+    <%= link_to "ログアウト", logout_path, method: :delete %>
+    <p>Find me in app/views/articles/index.html.erb http://localhost:3000/articles</p>
 <% else %>
     <%= render 'sessions/login' %>
 <% end %>

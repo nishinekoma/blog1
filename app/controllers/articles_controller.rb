@@ -1,7 +1,13 @@
 class ArticlesController < ApplicationController
   def index
-    @articles = Article.all #Articleというモデル名　インスタンス変数＠articlesに代入
-    p @articles #or puts @articles
+    #@articles = Article.all #Articleというモデル名　インスタンス変数＠articlesに代入
+    #articles　に、　usre_idの昇順にしたUserに関連するArticleを渡す。 original.logic
+    # @articles = Article.order(:user_id)
+    # 
+    @users = User.where(role: 1).includes(:articles)
+    p @users
+
+    p "index user.article.arder(:user_id) \n" , @articles #or puts @articles
   end
 
   def show

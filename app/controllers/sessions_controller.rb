@@ -5,8 +5,8 @@ class SessionsController < ApplicationController
 
   #ログインページから送信された情報を受け取り、ログイン処理を行う
   def create
-    #Email comparison .downcaseでEmailの大小を無視して比較する。 存在しなければnil
-    user = User.find_by(email: params[:email].downcase)
+    #name comparison .downcaseでnameの大小を無視して比較する。 存在しなければnil
+    user = User.find_by(name: params[:name].downcase)
     # userが存在する(nil)でない　かつ　パスワードが正しいか比較
     if user && user.authenticate(params[:password])
       log_in user
@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
   #cookieに保存されたユーザーidを削除し、ログアウトを行う
   def destroy
     log_out if logged_in?
-    #allow 
+
     redirect_to login_path, allow_other_host: true
   end
 
@@ -83,5 +83,5 @@ class SessionsController < ApplicationController
         p params
         params.require(:user).permit(:name, :email, :password, :password_confirmation)
       end
-      
+
 end

@@ -1,8 +1,47 @@
+/---*to do*---/
+ユーザ情報の変更する場所をつくること。
+
+
+
+記事の内部構成を考える
+	原則、　記事を作ったユーザのみが編集が可能である。
+	　　　　新たなモデル作るしかないのかな。 article と Cntent の責務範囲（明確化　clarification クラフィケイショん）を決めるひつようがある。
+			何回も追加される。
+	　　　　Content 内容
+	　　	  ・title、
+			  ・section  見出し
+	　　	  ・text、
+	　　	  ・picture
+			で、
+	を内容物とする。
+
+
+  編集モード機能
+	・編集モード起動中　と　わかりやすい表示になる。
+	・押す
+	　　title、
+	　　text、
+	　　picture
+	　　（※　どの行においても変更、削除、変更ができる。）
+	　　　　　時間があれば　カーソルを持ってきたところ　かつ　編集モード　を押した状態
+	懸念
+	　・インジェクション　テキストに
+			articles1.each do |article|
+				admin1.articles.create!(article)
+			end
+			の対策をする。
+
+
+title 
+
+text.....(複数)
+たまに画像をupし、できること。
+
+各テキストの削除ができること。
+
+
+
 pull したらやること　
-　　Desktop
-　
-　　notePC sudo bundle install  :gem 'dotenv-rails'
-          https://qiita.com/rarrrrsQ/items/1b1277499819659e5601
 
 
 ログイン
@@ -67,10 +106,12 @@ pull したらやること　
             　　ロール名（一般ユーザ General_role）
 
     
-懸念事項
+懸念事項（Conserns
 NSSメンバーのみがblogの編集、削除をできるようにする
 　　NSSメンバー　：編集、削除
 　　　　　NSSメンバーの自分のblogのみをいじる。
+ユーザの情報を更新することができる。
+
 
 testdate
 tarou@example.com
