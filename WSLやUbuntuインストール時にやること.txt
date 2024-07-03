@@ -17,3 +17,5 @@ sudo gem update
 General Ubuntu cmd
     rmdir directoryname
     exit 
+    draw.io Integration https://qiita.com/riku-shiru/items/5ab7c5aecdfea323ec4e
+    
