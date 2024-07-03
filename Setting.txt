@@ -1,6 +1,7 @@
 /---*to do*---/
 ユーザ情報の変更する場所をつくること。
-
+$ bin/rails active_storage:install
+$ bin/rails db:migrate
 
 
 記事の内部構成を考える
@@ -240,3 +241,10 @@ https://qiita.com/SLEAZOIDS/items/d6fb9c2d131c3fdd1387
 rails generate migration AddUserIdToArticles user:references
 bin/rails db:migrate
 
+
+画像の保存について
+https://guides.rubyonrails.org/active_storage_overview.html
+2 Setup
+$ bin/rails active_storage:install
+Copied migration 20240703113518_create_active_storage_tables.active_storage.rb from active_storage
+$ bin/rails db:migrate

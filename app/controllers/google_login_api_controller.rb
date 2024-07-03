@@ -1,4 +1,24 @@
+require 'open-uri'
 class GoogleLoginApiController < ApplicationController
+    # 画像変換
+    # ダウンロードする画像を返す
+    def picture_save(url)
+      # 保存先のファイルパス
+      output_path = Rails.root.join('public', 'uploads', 'images', "downloaded_image_#{SecureRandom.hex(10)}.jpg")
+  
+      # ディレクトリが存在しない場合は作成
+      FileUtils.mkdir_p(File.dirname(output_path))
+  
+      # 画像をダウンロードして保存
+      URI.open(url) do |image|
+        File.open(output_path, 'wb') do |file|
+          file.write(image.read)
+        end
+      end
+      p output_path.to_s
+      output_path.to_s # ファイルパスを返す
+    end
+
     # Class: Google::Auth::IDTokens::Verifier 外部ライブラリの読み込み
     
     require 'googleauth/id_tokens/verifier'
@@ -33,18 +53,25 @@ class GoogleLoginApiController < ApplicationController
       payload = Google::Auth::IDTokens.verify_oidc(params[:credential], aud: ENV['GOOGLE_CLIENT_ID'])
       #ランダムpassword生成
       generated_password = SecureRandom.hex(10)
+      #保存した画像を取得
+      #picture_icon = picture_save(payload['picture'])
       #　ユーザ作成
       @user = User.new(
         name: payload['name'], 
         email: payload['email'],
         password: generated_password,
-        password_confirmation: generated_password
+        password_confirmation: generated_password,
         )
       
       #ユーザ情報登録処理開始　sessions_helper.rb
-      user_save(@user)
+      #user_save(@user)
+        if @user.save
+          @user.image_icon.attach(image.png)
+          redirect_to root_path, notice: 'ユーザー登録が完了しました。'
+        else
+          redirect_to signup_path, alert: 'ユーザー登録に失敗しました。'
+        end
     end
-
 
         #    ---- private method ---- 
     #befo_action によりaction前に検証が実行される。
@@ -53,7 +80,8 @@ class GoogleLoginApiController < ApplicationController
         # 空白であるまたは一致しない場合
       if cookies["g_csrf_token"].blank? || params[:g_csrf_token].blank? || cookies["g_csrf_token"] != params[:g_csrf_token]
         redirect_to login_path, notice: '不正なアクセスです'
+        p "不正アクセス"
       end
 
     end
-end
+  end

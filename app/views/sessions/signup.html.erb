@@ -1,7 +1,7 @@
 <h1> Sign Up </h1>
 
 <%= form_with model: @user, url: signup_path do |form| %>
-
+  <!-- name -->
   <div class="mb-3">
     <%= form.label :name, "Name" %>
     <%= form.text_field :name, class: "form-control",
@@ -13,6 +13,7 @@
          </div>
        <% end %>
   </div>
+  <!-- Email -->
   <div class="mb-3">
     <%= form.label :email, "Email" %>
     <%= form.text_field :email, class: "form-control",
@@ -24,6 +25,7 @@
          </div>
        <% end %>
   </div>
+  <!-- password -->
   <div class="mb-3">
     <%= form.label :password, "Password"%>
     <%= form.password_field :password, class: "form-control",
@@ -35,12 +37,26 @@
          </div>
        <% end %>
   </div>
+  <!-- password_confirmation -->
   <div class="mb-3">
     <%= form.label :password_confirmation, "Confirm password" %>
     <%= form.password_field :password_confirmation, class: "form-control",
                          placeholder: "" %>
        <!--errors-->
        <% @user.errors.full_messages_for(:password_confirmation).each do |message| %>
+         <div class="text-danger">
+           <%= message %>
+         </div>
+       <% end %>
+  </div>
+  <!-- image_icon -->
+  <div class="mb-3">
+    <%= form.label :image_icon, "image_icon" %>
+    <!--  direct_uploadにより失敗した時の画像データ保持-->
+    <%= form.file_field :image_icon, direct_upload: true ,class: "form-control",
+                         placeholder: "" %>
+       <!--errors-->
+       <% @user.errors.full_messages_for(:image_icon).each do |message| %>
          <div class="text-danger">
            <%= message %>
          </div>

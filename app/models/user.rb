@@ -1,9 +1,9 @@
 class User < ApplicationRecord
   #  --- user dependencies --- #
-
+    # article
     has_many :articles, dependent: :destroy
-
-
+    # image one icon
+    has_one_attached :image_icon
   #  --- user  validations --- #
     #secure 安全な
     has_secure_password validations: false
