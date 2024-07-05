@@ -4,24 +4,18 @@ class GoogleLoginApiController < ApplicationController
     # 画像変換
     # ダウンロードする画像を返す
     def picture_save(url)
-      # 保存先のファイルパス
-      output_path = Rails.root.join('public', 'uploads', 'images', "downloaded_image_#{SecureRandom.hex(10)}.jpg")
-  
-      # ディレクトリが存在しない場合は作成
-      FileUtils.mkdir_p(File.dirname(output_path))
-  
-      # 画像をダウンロードして保存
+      tempfile = Tempfile.new(['downloaded_image', '.jpg'])
+    
       URI.open(url) do |image|
-        File.open(output_path, 'wb') do |file|
-          file.write(image.read)
-        end
+        tempfile.binmode
+        tempfile.write(image.read)
       end
-      p output_path.to_s
-      output_path.to_s # ファイルパスを返す
+    
+      tempfile.rewind
+      tempfile # 一時ファイルオブジェクトを返す
     end
 
     # Class: Google::Auth::IDTokens::Verifier 外部ライブラリの読み込み
-    
     require 'googleauth/id_tokens/verifier'
   
     #Rails doc ：CSRF対策の設定 :except(除く)　	実行しないアクション
@@ -43,9 +37,6 @@ class GoogleLoginApiController < ApplicationController
       redirect_to root_path, notice: 'ログインしました'
     end
   
-
-
-
     #    ---- signup ----  
     def signup_callback
       p "signup_callback stated "
@@ -56,7 +47,7 @@ class GoogleLoginApiController < ApplicationController
       #ランダムpassword生成
       generated_password = SecureRandom.hex(10)
       #保存した画像を取得
-      #picture_icon = picture_save(payload['picture'])
+      picture_icon = picture_save(payload['picture'])
       # p picture_icon
       #　ユーザ作成
       @user = User.new(
@@ -65,17 +56,20 @@ class GoogleLoginApiController < ApplicationController
         password: generated_password,
         password_confirmation: generated_password,
         )
-      @user.image_icon.attach('image.png')
-      p "@user.image.attached?:  ", @user.image.attached?
       #ユーザ情報登録処理開始　sessions_helper.rb
       #user_save(@user)
         if @user.save
-          redirect_to root_path, notice: 'ユーザー登録が完了しました。'
+          @user.image_icon.attach(io: picture_icon, filename: 'downloaded_image.jpg')
+          log_in @user
+          p  "google api user succssed" , @user
+          redirect_to "/admin_decide", notice: 'Successfully to create account'
+          #redirect_to root_path, notice: 'Successfully created account'
         else
-          redirect_to signup_path, alert: 'ユーザー登録に失敗しました。'
-        end
+          p "failed signup"
+          p @user.errors.full_messages # エラー出力’
+          render :signup, status: :unprocessable_entity
+      end
     end
-
         #    ---- private method ---- 
     #befo_action によりaction前に検証が実行される。
     private

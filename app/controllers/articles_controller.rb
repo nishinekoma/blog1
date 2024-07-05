@@ -1,11 +1,10 @@
 class ArticlesController < ApplicationController
   def index
-    #@articles = Article.all #Articleというモデル名　インスタンス変数＠articlesに代入
-    #articles　に、　usre_idの昇順にしたUserに関連するArticleを渡す。 original.logic
-    # @articles = Article.order(:user_id)
-    # 
+    #もしログインしていれば、現在ログインしているUser情報を格納する
+    @user = User.find(session[:user_id]) if logged_in?
+    #roleが１のUserを格納し、そのユーザに関するArticleをロードする
     @users = User.where(role: 1).includes(:articles)
-    p @users
+    p "index   @users :", @users
 
     p "index user.article.arder(:user_id) \n" , @articles #or puts @articles
   end

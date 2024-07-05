@@ -80,7 +80,7 @@ class SessionsController < ApplicationController
 
     private
       def user_params
-        p params
+        p "user_params is    \n", params
         params.require(:user).permit(:name, :email, :password, :password_confirmation, :image_icon)
       end
 
