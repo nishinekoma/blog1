@@ -1,3 +1,4 @@
+
 require 'open-uri'
 class GoogleLoginApiController < ApplicationController
     # 画像変換
@@ -36,6 +37,7 @@ class GoogleLoginApiController < ApplicationController
       # find_or_create_by 引数の条件に該当するデータを見つける。
       user = User.find_or_create_by(email: payload['email'])
       # Userモデルからid を見つけログインしているユーザとして session に保存 sessions_helper
+      p "user :" ,user
       log_in user
       # redirect_to で、　コントローラcontroller　→　URL　→　route　→　controller　→　view　遷移する。
       redirect_to root_path, notice: 'ログインしました'
@@ -55,6 +57,7 @@ class GoogleLoginApiController < ApplicationController
       generated_password = SecureRandom.hex(10)
       #保存した画像を取得
       #picture_icon = picture_save(payload['picture'])
+      # p picture_icon
       #　ユーザ作成
       @user = User.new(
         name: payload['name'], 
@@ -62,11 +65,11 @@ class GoogleLoginApiController < ApplicationController
         password: generated_password,
         password_confirmation: generated_password,
         )
-      
+      @user.image_icon.attach('image.png')
+      p "@user.image.attached?:  ", @user.image.attached?
       #ユーザ情報登録処理開始　sessions_helper.rb
       #user_save(@user)
         if @user.save
-          @user.image_icon.attach(image.png)
           redirect_to root_path, notice: 'ユーザー登録が完了しました。'
         else
           redirect_to signup_path, alert: 'ユーザー登録に失敗しました。'
