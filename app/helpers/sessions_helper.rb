@@ -9,8 +9,10 @@ module SessionsHelper
   def current_user
     if session[:user_id]
      #@current_user = @current_user || User.find_by(id: session[:user_id])と同じ意味
-      @current_user ||= User.find_by(id: session[:user_id])
+      @current_user = User.find_by(id: session[:user_id])
       p "currnet_user", @current_user
+      # https://stackoverflow.com/questions/1023146/is-it-good-style-to-explicitly-return-in-ruby
+      @current_user # 明示的にリターンする。　最後がp "currnet_user", @current_user 上参照　
     end
   end
 
