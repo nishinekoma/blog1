@@ -59,7 +59,16 @@ Rails debug tools
 https://migisanblog.com/rails-debug-tool/
 
 
+binmode について
+前提知識　https://www.tohoho-web.com/perl/binary.htm
+    ・すべてのファイルは　「バイナリファイル」「テキストファイル」　の2種類である。
+    　・テキスト　「.txt .htm .css .cgi .pl 」　　　　　　　　　　通常のテキストエディタで読み書きできるファイル
+    　・バイナリ　「.gif .jpg .mpg .doc .xls .exe」　　　　　　　画像ファイルやワープロのファイルなど、文字や改行などの特殊文字コード以外の情報を含んでいるファイル
 
+Unix Windows ともに、　バイナリファイルを読み込むときは　binmode　を使用する
+
+
+前提知識
 /---*用語　ネット関係*---/
 リッスンアドレス　ポート番号を開いて外部からの接続を待っている状態。
 

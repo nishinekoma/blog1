@@ -1,13 +1,15 @@
-
 require 'open-uri'
 class GoogleLoginApiController < ApplicationController
     # 画像変換
     # ダウンロードする画像を返す
     def picture_save(url)
       tempfile = Tempfile.new(['downloaded_image', '.jpg'])
-    
+      
+      # URI.open
       URI.open(url) do |image|
+        #画像を読み込むためバイナリモードに変換　なぜかはmemo.txt
         tempfile.binmode
+        #writeで書き込み
         tempfile.write(image.read)
       end
     
@@ -57,7 +59,7 @@ class GoogleLoginApiController < ApplicationController
         password_confirmation: generated_password,
         )
       #ユーザ情報登録処理開始　sessions_helper.rb
-      #user_save(@user)
+      #user_save(@user) attach 付属させる
         if @user.save
           @user.image_icon.attach(io: picture_icon, filename: 'downloaded_image.jpg')
           log_in @user
@@ -67,7 +69,7 @@ class GoogleLoginApiController < ApplicationController
         else
           p "failed signup"
           p @user.errors.full_messages # エラー出力’
-          render :signup, status: :unprocessable_entity
+          render 'sessions/signup', status: :unprocessable_entity
       end
     end
         #    ---- private method ---- 
