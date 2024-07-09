@@ -1,6 +1,9 @@
 <% if logged_in? %><!--login 必須にする--->
       <!--logged user -->
-<%= image_tag @user.image_icon %>
+      <!-- object-fit でアスペクト比(横と縦の長さの比率) を守った状態でやる。 rounded-circle で円形表示。-->
+<%= image_tag @user.image_icon ,  size: 100, 
+    class: "rounded-circle", 
+    style: "object-fit: cover;" %>
   <header>
     <div class="title">
       <p>Articles</p>

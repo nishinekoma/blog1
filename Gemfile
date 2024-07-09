@@ -38,7 +38,7 @@ gem "jbuilder"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ mswin mswin64 mingw x64_mingw jruby ]
 
-# Reduces boot times through caching; required in config/boot.rb
+# Reduces boot times through caching; required in config/boot.rb  　config/boot.rb ファイルを開き、以下のように Bootsnap をロードするコードが含まれているか確認
 gem "bootsnap", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
@@ -68,8 +68,11 @@ group :development do
 end
 
 gem 'solargraph', group: :development
-
-
+#add to fix server error
+gem 'language_server-protocol', '~> 3.17', '>= 3.17.0.3'
+#add bootstrap
+gem 'bootstrap', '~> 5.3.3'
+gem 'jquery-rails'
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"

@@ -1,7 +1,15 @@
 /---*to do*---/
 ユーザ情報の変更する場所をつくること。
-$ bin/rails active_storage:install
-$ bin/rails db:migrate
+　　・まず、ユーザの画像表示のカスタム　（できれば範囲選択してそれをカスタム）できればやる。
+　　　　・ユーザをimageに表示されてるところに表示する。
+            https://zenn.dev/yukihaga/articles/e63a224431bc96
+            かなり参考になる
+            bootstrapを使用する。　sectionあり
+			
+
+Desktop側でなぜからエラーでたので
+gem install language_server-protocol
+Could not find language_server-protocol-3.17.0.3 in cached gems or installed locally
 
 
 記事の内部構成を考える
@@ -248,3 +256,12 @@ https://guides.rubyonrails.org/active_storage_overview.html
 $ bin/rails active_storage:install
 Copied migration 20240703113518_create_active_storage_tables.active_storage.rb from active_storage
 $ bin/rails db:migrate
+
+bootstrapを使用する。　
+参考
+	  https://github.com/twbs/bootstrap-rubygem
+	　https://qiita.com/arata0520/items/4330c2be8740bc560390
+	　https://stackoverflow.com/questions/24609912/execjsruntimeunavailable-in-rails-4-1-4
+	//(ExecJS::RuntimeUnavailable)　対策。　JavaScriptランタイムをインストール
+	・sudo apt-get install nodejs
+	（できれば範囲選択してそれをカスタム）　https://rochefort.hatenablog.com/entry/using_cropperjs_with_active_storage
