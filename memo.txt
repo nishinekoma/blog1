@@ -95,8 +95,17 @@ https://zenn.dev/code_journey_ys/articles/77adcf112a1ea1
         #ruby-rubocop //not working in wsl2. Use Solargraph as an alternative.　代替えとしてSolargraphを使用する。
         sudo install Solargraph
         endwise
+        Formatter/Beautify
+　　　　　sudo gem install htmlbeautifier
+erbファイルにもhtmlタグのemmetを効かせる
+setting.jsonに入れればオッケーです。拡張機能ではないです。
 
+    "emmet.includeLanguages": {
+        "ruby": "html",
+        "erb": "html"
+    },
 
+    
     html and css 
         https://www.youtube.com/watch?v=AxfjMZbLifQ
 

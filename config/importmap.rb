@@ -9,3 +9,6 @@ pin_all_from "app/javascript/controllers", under: "controllers"
 #add  doc:https://github.com/twbs/bootstrap-rubygem
 pin "bootstrap", to: "bootstrap.min.js", preload: true
 pin "@popperjs/core", to: "popper.js", preload: true
+# config/importmap.rb
+pin "cropperjs", to: "https://ga.jspm.io/npm:cropperjs@1.6.2/dist/cropper.esm.js"
+

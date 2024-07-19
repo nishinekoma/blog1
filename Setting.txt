@@ -265,3 +265,21 @@ bootstrapを使用する。　
 	//(ExecJS::RuntimeUnavailable)　対策。　JavaScriptランタイムをインストール
 	・sudo apt-get install nodejs
 	（できれば範囲選択してそれをカスタム）　https://rochefort.hatenablog.com/entry/using_cropperjs_with_active_storage
+
+#Alt shift fで、タブきれいにする依存関係
+npm install -g html-beautify
+sudo gem install htmlbeautifier
+
+画面のクロップ設定 
+参考　
+https://www.youtube.com/watch?v=Nplht2tKPSU
+https://qiita.com/holy_engineer/items/a4723c3e476ccd6828a8
+https://github.com/fengyuanchen/cropperjs
+
+nishinekma@:~/work/Rails/blog1$ ./bin/rails generate stimulus image_crop
+      create  app/javascript/controllers/image_crop_controller.js
+
+bundle show bootstrap //bootstrap version確認
+# config/importmap.rb https://www.jsdelivr.com/package/npm/cropperjs
+pin "cropperjs", to: "https://ga.jspm.io/npm:cropperjs@1.6.2/dist/cropper.esm.js"
+sudo apt install -y libvips42
