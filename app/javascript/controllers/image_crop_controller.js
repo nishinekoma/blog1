@@ -42,12 +42,6 @@ export default class extends Controller {
       };
       reader.readAsDataURL(file);
       // ファイル入力をリセットして、同じ画像を再度選択できるようにする
-      event.target.value = '';
-      const file = event.target.files[0];
-      console.log("after event is ",event);
-      console.log("after file is ",file);
-      console.log("after fileName is :",fileName);
-      console.log("")
       //replace "No file chosen" with the new file name
       // $('#trim_img_uploder').html(fileName);
 
