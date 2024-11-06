@@ -4,9 +4,8 @@ https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css
 " rel="stylesheet">
 <!-- Bootstrap JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
-
-
+<!-- image_crop.css -->
+<%= stylesheet_link_tag "image_crop" %>
 <h1> Sign Up </h1>
 <%= form_with model: @user, url: signup_path do |form| %>
   <!-- name -->
@@ -60,7 +59,7 @@ https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css
 <!-- image_icon -->
 <div class="mb-3" data-controller="image-crop">
   <%= form.label :image_icon, "Image Icon" %>
-  <%= image_tag "image.png", id: :prev_img, resize_to_limit: [100, 100] %>
+  <%= image_tag "image.png", id: :prev_img %>
   <canvas id="cropped_canvas" style="display:none"></canvas>
   <%= form.file_field :image_icon, id: :trim_img_uploder, direct_upload: true, class: "form-control",
                       placeholder: "", data: { image_crop_target: "fileInput" } %>
@@ -75,6 +74,12 @@ https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css
     <%= form.submit "Sign Up", class: "btn btn-primary" %>
   </div>
 
+<!-- クロップ結果を表示するためのHTML要素 -->
+<div class="cropped-result">
+  <h2>Crop Result:</h2>
+  <img id="crop_result" src="" alt="Cropped Result" class="img-fluid">
+</div>
+
 <!-- test crop -->
         <%= form.hidden_field :image_x, id: "image_x" %>
         <%= form.hidden_field :image_y, id: "image_y" %>
@@ -83,6 +88,8 @@ https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css
         <%= form.hidden_field :aspect_numerator, id: "aspect_numerator", value: "1.0" %>
         <%= form.hidden_field :aspect_denominator ,id: "aspect_denominator", value: "1.0" %>
 <!---->
+
+
 
 
 <% end %>

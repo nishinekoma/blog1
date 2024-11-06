@@ -1,0 +1,19 @@
+h1{
+    color: grey;
+}
+
+.cropper-face {
+    border-radius: 50%;
+  }
+
+.cropper-view-box {
+    outline: 0;
+    box-shadow: 0 0 0 1px #39f;
+}
+
+#prev_img {
+    width: 100px;   /* 表示サイズ */
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%; /* 丸型のアイコン */
+  }
