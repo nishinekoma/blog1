@@ -1,104 +1,81 @@
-
-<link href="
-https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css
-" rel="stylesheet">
-<!-- Bootstrap JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- image_crop.css -->
-<%= stylesheet_link_tag "image_crop" %>
 <h1> Sign Up </h1>
 <%= form_with model: @user, url: signup_path do |form| %>
-  <!-- name -->
+  
   <div class="mb-3">
     <%= form.label :name, "Name" %>
     <%= form.text_field :name, class: "form-control",
     placeholder: "" %>
-    <!--errors-->
-    <% @user.errors.full_messages_for(:name).each do |message| %>
+        <% @user.errors.full_messages_for(:name).each do |message| %>
       <div class="text-danger">
         <%= message %>
       </div>
     <% end %>
   </div>
-  <!-- Email -->
+
   <div class="mb-3">
     <%= form.label :email, "Email" %>
     <%= form.text_field :email, class: "form-control",
                             placeholder: "" %>
-    <!--errors-->
-    <% @user.errors.full_messages_for(:email).each do |message| %>
+        <% @user.errors.full_messages_for(:email).each do |message| %>
       <div class="text-danger">
         <%= message %>
       </div>
     <% end %>
   </div>
-  <!-- password -->
+
   <div class="mb-3">
     <%= form.label :password, "Password"%>
     <%= form.password_field :password, class: "form-control",
                             placeholder: "" %>
-    <!--errors-->
-    <% @user.errors.full_messages_for(:password).each do |message| %>
+        <% @user.errors.full_messages_for(:password).each do |message| %>
       <div class="text-danger">
         <%= message %>
       </div>
     <% end %>
   </div>
-  <!-- password_confirmation -->
+
   <div class="mb-3">
     <%= form.label :password_confirmation, "Confirm password" %>
     <%= form.password_field :password_confirmation, class: "form-control",
                             placeholder: "" %>
-    <!--errors-->
-    <% @user.errors.full_messages_for(:password_confirmation).each do |message| %>
+        <% @user.errors.full_messages_for(:password_confirmation).each do |message| %>
       <div class="text-danger">
         <%= message %>
       </div>
     <% end %>
   </div>
-<!-- image_icon -->
-<div class="mb-3" data-controller="image-crop">
+
+<div class="mb-3" data-controller="image-crop" data-action="change->image-crop#handleFileSelect" data-turbo-permanent>
   <%= form.label :image_icon, "Image Icon" %>
   <%= image_tag "image.png", id: :prev_img %>
   <canvas id="cropped_canvas" style="display:none"></canvas>
   <%= form.file_field :image_icon, id: :trim_img_uploder, direct_upload: true, class: "form-control",
                       placeholder: "", data: { image_crop_target: "fileInput" } %>
-  <!--errors-->
-  <% @user.errors.full_messages_for(:image_icon).each do |message| %>
+    <% @user.errors.full_messages_for(:image_icon).each do |message| %>
     <div class="text-danger">
       <%= message %>
-    </div>
-  <% end %>
+      </div>
+    <% end %>
 </div>
+
   <div class="mb-3">
     <%= form.submit "Sign Up", class: "btn btn-primary" %>
-  </div>
+    </div>
 
-<!-- クロップ結果を表示するためのHTML要素 -->
 <div class="cropped-result">
   <h2>Crop Result:</h2>
   <img id="crop_result" src="" alt="Cropped Result" class="img-fluid">
 </div>
 
-<!-- test crop -->
         <%= form.hidden_field :image_x, id: "image_x" %>
         <%= form.hidden_field :image_y, id: "image_y" %>
         <%= form.hidden_field :image_w, id: "image_w" %>
         <%= form.hidden_field :image_h, id: "image_h" %>
         <%= form.hidden_field :aspect_numerator, id: "aspect_numerator", value: "1.0" %>
         <%= form.hidden_field :aspect_denominator ,id: "aspect_denominator", value: "1.0" %>
-<!---->
-
-
-
-
 <% end %>
 
-<!-- test image -->
-  <!-- 
-      <%= image_tag User.first.image_icon.variant(resize_to_limit: [1000,1000]), data:{ controller: "image-crop"}%>
-  -->
-<!-- image modal -->
+
 <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -107,23 +84,19 @@ https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <!-- ここに画像を表示 -->
-        <img id="modal_image" src="" alt="Selected Image" class="img-fluid">
+                <img id="modal_image" src="" alt="Selected Image" class="img-fluid" data-image-crop-target="modalImage">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" data-action="click->image-crop#saveChanges">Save changes</button>
+        </div>
       </div>
-    </div>
-  </div>
+   </div>
 </div>
 
-<!-- google API singup -->
 <div>
-  <!-- クライアントライブラリの読み込み 下記1行を追加 -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <!-- Googleサインアップボタンの表示 start -->
-  <div id="g_id_onload"
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <div id="g_id_onload"
     data-client_id="<%= ENV['GOOGLE_CLIENT_ID'] %>"
     data-login_uri="http://localhost:3000/google_login_api/signup_callback"
     data-auto_prompt="false">
@@ -136,15 +109,5 @@ https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css
     data-shape="rectangular"
     data-logo_alignment="left">
   </div>
-  <!-- Googleログインボタン end -->
-</div>
+  </div>
 <%= link_to "login_page", login_path%>
-<div data-controller="image-crop">
-  <input data-hello-target="name" type="text">
-  <button data-action="click->hello#greet">
-    Greet
-  </button>
-  <span data-hello-target="output">
-
-  </span>
-</div>

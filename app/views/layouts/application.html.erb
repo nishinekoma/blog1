@@ -6,10 +6,9 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-
-
+        <link href="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css" rel="stylesheet">
+    
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
   </head>
 
   <body>
@@ -20,6 +19,8 @@
     <% if alert %>
       <div class="alert alert-danger" style="color: red;"><%= alert %></div>
     <% end %>
+    
     <%= yield %>
+    <%= javascript_importmap_tags %>
   </body>
 </html>
