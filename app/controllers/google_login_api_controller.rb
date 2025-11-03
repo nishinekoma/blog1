@@ -58,6 +58,14 @@ class GoogleLoginApiController < ApplicationController
         password: generated_password,
         password_confirmation: generated_password,
         )
+
+      #すでに登録されているemailの場合
+      if User.exists?(email: @user.email)
+        p "email already exists"
+        redirect_to login_path, notice: 'すでに登録されています。ログインしてください'
+        return
+      end
+
       #ユーザ情報登録処理開始　sessions_helper.rb
       #user_save(@user) attach 付属させる
         if @user.save

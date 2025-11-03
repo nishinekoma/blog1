@@ -117,7 +117,7 @@ https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <!-- Googleサインアップボタンの表示 start -->
   <div id="g_id_onload"
-    data-client_id="537001528197-mibeq2ma6aep3ismhd4buk6jjc62jd6t.apps.googleusercontent.com"
+    data-client_id="<%= ENV['GOOGLE_CLIENT_ID'] %>"
     data-login_uri="http://localhost:3000/google_login_api/signup_callback"
     data-auto_prompt="false">
   </div>
