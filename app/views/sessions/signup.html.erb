@@ -74,13 +74,13 @@ https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css
     <%= form.submit "Sign Up", class: "btn btn-primary" %>
   </div>
 
-<!-- クロップ結果を表示するためのHTML要素 -->
-<div class="cropped-result">
-  <h2>Crop Result:</h2>
-  <img id="crop_result" src="" alt="Cropped Result" class="img-fluid">
-</div>
+# <!-- クロップ結果を表示するためのHTML要素 -->
+# <div class="cropped-result">
+#   <h2>Crop Result:</h2>
+#   <img id="crop_result" src="" alt="Cropped Result" class="img-fluid">
+# </div>
 
-<!-- test crop -->
+<!-- result crop -->
         <%= form.hidden_field :image_x, id: "image_x" %>
         <%= form.hidden_field :image_y, id: "image_y" %>
         <%= form.hidden_field :image_w, id: "image_w" %>
@@ -94,10 +94,7 @@ https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css
 
 <% end %>
 
-<!-- test image -->
-  <!-- 
-      <%= image_tag User.first.image_icon.variant(resize_to_limit: [1000,1000]), data:{ controller: "image-crop"}%>
-  -->
+
 <!-- image modal -->
 <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -118,12 +115,9 @@ https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css
   </div>
 </div>
 
-<!-- google API singup -->
 <div>
-  <!-- クライアントライブラリの読み込み 下記1行を追加 -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <!-- Googleサインアップボタンの表示 start -->
-  <div id="g_id_onload"
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <div id="g_id_onload"
     data-client_id="<%= ENV['GOOGLE_CLIENT_ID'] %>"
     data-login_uri="http://localhost:3000/google_login_api/signup_callback"
     data-auto_prompt="false">
@@ -136,15 +130,5 @@ https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css
     data-shape="rectangular"
     data-logo_alignment="left">
   </div>
-  <!-- Googleログインボタン end -->
-</div>
+  </div>
 <%= link_to "login_page", login_path%>
-<div data-controller="image-crop">
-  <input data-hello-target="name" type="text">
-  <button data-action="click->hello#greet">
-    Greet
-  </button>
-  <span data-hello-target="output">
-
-  </span>
-</div>
