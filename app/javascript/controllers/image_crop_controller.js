@@ -1,66 +1,155 @@
 import { Controller } from "@hotwired/stimulus";
 import Cropper from 'cropperjs';
 
-// import Cropper from 'cropperjs';
-// Connects to data-controller="image-crop"
-
 export default class extends Controller {
   static targets = ["fileInput", "image", "modal"];
-  connect() {
-    this.fileInputTarget.addEventListener('change', this.handleFileSelect.bind(this));
-  }
-  handleFileSelect(event) {
-    //https://stackoverflow.com/questions/26634616/filereader-upload-same-file-again-not-working
-    // 二度同じが画像が選択された時の対策　ファイル選択されてませんを回避する
-    //variable to get the name of the uploaded file
+  cropper = null; // Cropperインスタンスをクラスプロパティとして保持
 
-    console.log(event);
+  connect() {
+    if (this.hasFileInputTarget) {
+      //エラーが出るが、fileInput ターゲット（fileInputTarget）に対してイベントリスナーを設定しているだけなので、問題なし
+      this.fileInputTarget.addEventListener('change', this.handleFileSelect.bind(this));
+    }
+    // 上記の理由により何も表示しない。
+
+  }
+
+
+  handleFileSelect(event) {
     const file = event.target.files[0];
-    console.log("file is ",file)
-    var fileName = file.name;
-    console.log("fileName is :",fileName);
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        // モーダルを強制的に非表示にする
-        const existingModal = document.querySelector('.modal.show');
-        if (existingModal) {
-          const existingBootstrapModal = bootstrap.Modal.getInstance(existingModal);
-          existingBootstrapModal.hide();
-        }
-
-        // モーダルの画像を更新
         const image = document.getElementById('modal_image');
         image.src = e.target.result;
 
-        // モーダルを再表示
         const modalElement = document.getElementById('imageModal');
-        if (modalElement) {
-          const modal = new bootstrap.Modal(modalElement);
-          modal.show();
+        const modal = new bootstrap.Modal(modalElement);
+        modal.show();
+
+        // Cropperインスタンスが存在する場合は破棄
+        if (this.cropper) {
+          this.cropper.destroy();
+          this.cropper = null;
         }
+
+        // モーダル表示時にCropperを初期化
+        modalElement.addEventListener('shown.bs.modal', () => {
+          this.cropper = new Cropper(image, {
+            aspectRatio: 1,
+            viewMode: 1,
+            cropBoxResizable: true,
+            cropBoxMovable: true,
+            movable: true,
+            zoomable: true,
+            background: false,
+          });
+        }, { once: true }); // イベントリスナーを1回だけ実行
+
+        // 「Save changes」ボタンのクリックイベントのバインドを一度解除してから再設定
+        const saveBtn = modalElement.querySelector('.btn-primary');
+        saveBtn.removeEventListener('click', this.saveChanges); // 既存のリスナーを解除
+        saveBtn.addEventListener('click', this.saveChanges.bind(this, modal), { once: true }); // 再バインド
       };
       reader.readAsDataURL(file);
-      // ファイル入力をリセットして、同じ画像を再度選択できるようにする
-      //replace "No file chosen" with the new file name
-      // $('#trim_img_uploder').html(fileName);
-
     }
   }
-  //   console.log('image_crop is working');
-  //   console.log('Cropper is ' , Cropper);
-  //   const image = this.element;
-  //   const cropper = new Cropper(image, {
-  //   aspectRatio: 16 / 9,
-  //   crop(event) {
-  //     console.log(event.detail.x);
-  //     console.log(event.detail.y);
-  //     console.log(event.detail.width);
-  //     console.log(event.detail.height);
-  //     console.log(event.detail.rotate);
-  //     console.log(event.detail.scaleX);
-  //     console.log(event.detail.scaleY);
-  //   },
-  // });
-  // console.log('Cropper is ' , cropper);
+
+  saveChanges(modal) {
+    if (this.cropper) {
+      // 画像を高解像度でクロップ
+      const croppedCanvas = this.cropper.getCroppedCanvas({
+        width: 200, // 表示サイズより大きめに設定
+        height: 200 
+      });
+  
+      if (croppedCanvas) {
+        // ここで高解像度のキャンバスをそのまま画像として使用
+        const croppedImageDataURL = croppedCanvas.toDataURL('image/png');
+        document.getElementById('prev_img').src = croppedImageDataURL;
+  
+        // モーダルを閉じる
+        modal.hide();
+  
+        // Cropperインスタンスを破棄
+        this.cropper.destroy();
+        this.cropper = null;
+      }
+    }
   }
+}
+
+// import { Controller } from "@hotwired/stimulus";
+// import Cropper from 'cropperjs';
+
+// export default class extends Controller {
+//   static targets = ["fileInput", "image", "modal"];
+//   cropper = null; // Cropperインスタンスをクラスプロパティとして保持
+
+//   connect() {
+//     this.fileInputTarget.addEventListener('change', this.handleFileSelect.bind(this));
+//   }
+
+//   handleFileSelect(event) {
+//     const file = event.target.files[0];
+//     if (file) {
+//       const reader = new FileReader();
+//       reader.onload = (e) => {
+//         const image = document.getElementById('modal_image');
+//         image.src = e.target.result;
+
+//         const modalElement = document.getElementById('imageModal');
+//         const modal = new bootstrap.Modal(modalElement);
+//         modal.show();
+
+//         // Cropperインスタンスが存在する場合は破棄
+//         if (this.cropper) {
+//           this.cropper.destroy();
+//           this.cropper = null;
+//         }
+
+//         // モーダル表示時にCropperを初期化
+//         modalElement.addEventListener('shown.bs.modal', () => {
+//           this.cropper = new Cropper(image, {
+//             aspectRatio: 1,
+//             viewMode: 1,
+//             cropBoxResizable: true,
+//             cropBoxMovable: true,
+//             movable: true,
+//             zoomable: true,
+//             background: false,
+//           });
+//         }, { once: true }); // イベントリスナーを1回だけ実行
+
+//         // 「Save changes」ボタンのクリックイベントのバインドを一度解除してから再設定
+//         const saveBtn = modalElement.querySelector('.btn-primary');
+//         saveBtn.removeEventListener('click', this.saveChanges); // 既存のリスナーを解除
+//         saveBtn.addEventListener('click', this.saveChanges.bind(this, modal), { once: true }); // 再バインド
+//       };
+//       reader.readAsDataURL(file);
+//     }
+//   }
+
+//   saveChanges(modal) {
+//     if (this.cropper) {
+//       // 画像を高解像度でクロップ
+//       const croppedCanvas = this.cropper.getCroppedCanvas({
+//         width: 200, // 表示サイズより大きめに設定
+//         height: 200 
+//       });
+  
+//       if (croppedCanvas) {
+//         // ここで高解像度のキャンバスをそのまま画像として使用
+//         const croppedImageDataURL = croppedCanvas.toDataURL('image/png');
+//         document.getElementById('prev_img').src = croppedImageDataURL;
+  
+//         // モーダルを閉じる
+//         modal.hide();
+  
+//         // Cropperインスタンスを破棄
+//         this.cropper.destroy();
+//         this.cropper = null;
+//       }
+//     }
+//   }
+// }
