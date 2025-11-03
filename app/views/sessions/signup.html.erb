@@ -1,81 +1,101 @@
+
+<link href="
+https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css
+" rel="stylesheet">
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- image_crop.css -->
+<%= stylesheet_link_tag "image_crop" %>
 <h1> Sign Up </h1>
 <%= form_with model: @user, url: signup_path do |form| %>
-  
+  <!-- name -->
   <div class="mb-3">
     <%= form.label :name, "Name" %>
     <%= form.text_field :name, class: "form-control",
     placeholder: "" %>
-        <% @user.errors.full_messages_for(:name).each do |message| %>
+    <!--errors-->
+    <% @user.errors.full_messages_for(:name).each do |message| %>
       <div class="text-danger">
         <%= message %>
       </div>
     <% end %>
   </div>
-
+  <!-- Email -->
   <div class="mb-3">
     <%= form.label :email, "Email" %>
     <%= form.text_field :email, class: "form-control",
                             placeholder: "" %>
-        <% @user.errors.full_messages_for(:email).each do |message| %>
+    <!--errors-->
+    <% @user.errors.full_messages_for(:email).each do |message| %>
       <div class="text-danger">
         <%= message %>
       </div>
     <% end %>
   </div>
-
+  <!-- password -->
   <div class="mb-3">
     <%= form.label :password, "Password"%>
     <%= form.password_field :password, class: "form-control",
                             placeholder: "" %>
-        <% @user.errors.full_messages_for(:password).each do |message| %>
+    <!--errors-->
+    <% @user.errors.full_messages_for(:password).each do |message| %>
       <div class="text-danger">
         <%= message %>
       </div>
     <% end %>
   </div>
-
+  <!-- password_confirmation -->
   <div class="mb-3">
     <%= form.label :password_confirmation, "Confirm password" %>
     <%= form.password_field :password_confirmation, class: "form-control",
                             placeholder: "" %>
-        <% @user.errors.full_messages_for(:password_confirmation).each do |message| %>
+    <!--errors-->
+    <% @user.errors.full_messages_for(:password_confirmation).each do |message| %>
       <div class="text-danger">
         <%= message %>
       </div>
     <% end %>
   </div>
-
-<div class="mb-3" data-controller="image-crop" data-action="change->image-crop#handleFileSelect" data-turbo-permanent>
+<!-- image_icon -->
+<div class="mb-3" data-controller="image-crop">
   <%= form.label :image_icon, "Image Icon" %>
   <%= image_tag "image.png", id: :prev_img %>
   <canvas id="cropped_canvas" style="display:none"></canvas>
   <%= form.file_field :image_icon, id: :trim_img_uploder, direct_upload: true, class: "form-control",
                       placeholder: "", data: { image_crop_target: "fileInput" } %>
-    <% @user.errors.full_messages_for(:image_icon).each do |message| %>
+  <!--errors-->
+  <% @user.errors.full_messages_for(:image_icon).each do |message| %>
     <div class="text-danger">
       <%= message %>
-      </div>
-    <% end %>
+    </div>
+  <% end %>
 </div>
-
   <div class="mb-3">
     <%= form.submit "Sign Up", class: "btn btn-primary" %>
-    </div>
+  </div>
 
-<div class="cropped-result">
-  <h2>Crop Result:</h2>
-  <img id="crop_result" src="" alt="Cropped Result" class="img-fluid">
-</div>
+# <!-- クロップ結果を表示するためのHTML要素 -->
+# <div class="cropped-result">
+#   <h2>Crop Result:</h2>
+#   <img id="crop_result" src="" alt="Cropped Result" class="img-fluid">
+# </div>
 
+<!-- result crop -->
         <%= form.hidden_field :image_x, id: "image_x" %>
         <%= form.hidden_field :image_y, id: "image_y" %>
         <%= form.hidden_field :image_w, id: "image_w" %>
         <%= form.hidden_field :image_h, id: "image_h" %>
         <%= form.hidden_field :aspect_numerator, id: "aspect_numerator", value: "1.0" %>
         <%= form.hidden_field :aspect_denominator ,id: "aspect_denominator", value: "1.0" %>
+<!---->
+
+
+
+
 <% end %>
 
 
+<!-- image modal -->
 <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -84,14 +104,15 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-                <img id="modal_image" src="" alt="Selected Image" class="img-fluid" data-image-crop-target="modalImage">
+        <!-- ここに画像を表示 -->
+        <img id="modal_image" src="" alt="Selected Image" class="img-fluid">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" data-action="click->image-crop#saveChanges">Save changes</button>
-        </div>
+        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
-   </div>
+    </div>
+  </div>
 </div>
 
 <div>

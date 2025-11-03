@@ -1,47 +1,41 @@
-// app/javascript/controllers/image_crop_controller.js
-
 import { Controller } from "@hotwired/stimulus";
-// Bootstrapのインポートは不要（window.bootstrapを使用するため）
+import Cropper from 'cropperjs';
 
 export default class extends Controller {
-  // fileInput, modalImage のターゲットはHTMLで必要
-  static targets = ["fileInput", "modalImage"]; 
-  
-  cropper = null; 
+  static targets = ["fileInput", "image", "modal"];
+  cropper = null; // Cropperインスタンスをクラスプロパティとして保持
 
   connect() {
-    console.log("Image Crop Controller connected.");
+    if (this.hasFileInputTarget) {
+      //エラーが出るが、fileInput ターゲット（fileInputTarget）に対してイベントリスナーを設定しているだけなので、問題なし
+      this.fileInputTarget.addEventListener('change', this.handleFileSelect.bind(this));
+    }
+    // 上記の理由により何も表示しない。
+
   }
 
 
   handleFileSelect(event) {
-    console.log("File selected. Attempting to open modal.");
-    
-    // actionがfile input自体にバインドされているため、event.targetからファイルを取得
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
-      
       reader.onload = (e) => {
+        const image = document.getElementById('modal_image');
+        image.src = e.target.result;
+
+        const modalElement = document.getElementById('imageModal');
+        const modal = new bootstrap.Modal(modalElement);
+        modal.show();
+
+        // Cropperインスタンスが存在する場合は破棄
         if (this.cropper) {
           this.cropper.destroy();
           this.cropper = null;
         }
 
-        this.modalImageTarget.src = e.target.result;
-        
-        // 2. モーダルを発火
-        const modalElement = document.getElementById('imageModal');
-        
-        // window.bootstrap.Modal を使用
-        const modal = new window.bootstrap.Modal(modalElement); 
-        modal.show();
-        
-        console.log("Modal instance created and show() called.");
-
-        // 3. モーダル表示完了イベント時にCropperを初期化
+        // モーダル表示時にCropperを初期化
         modalElement.addEventListener('shown.bs.modal', () => {
-          this.cropper = new window.Cropper(this.modalImageTarget, {
+          this.cropper = new Cropper(image, {
             aspectRatio: 1,
             viewMode: 1,
             cropBoxResizable: true,
@@ -50,36 +44,34 @@ export default class extends Controller {
             zoomable: true,
             background: false,
           });
-          console.log("Cropper initialized.");
-        }, { once: true });
+        }, { once: true }); // イベントリスナーを1回だけ実行
+
+        // 「Save changes」ボタンのクリックイベントのバインドを一度解除してから再設定
+        const saveBtn = modalElement.querySelector('.btn-primary');
+        saveBtn.removeEventListener('click', this.saveChanges); // 既存のリスナーを解除
+        saveBtn.addEventListener('click', this.saveChanges.bind(this, modal), { once: true }); // 再バインド
       };
-      
       reader.readAsDataURL(file);
     }
   }
 
-
-  saveChanges(event) {
-    event.preventDefault(); 
-    
+  saveChanges(modal) {
     if (this.cropper) {
+      // 画像を高解像度でクロップ
       const croppedCanvas = this.cropper.getCroppedCanvas({
-        width: 200, 
+        width: 200, // 表示サイズより大きめに設定
         height: 200 
       });
-
+  
       if (croppedCanvas) {
-        document.getElementById('prev_img').src = croppedCanvas.toDataURL('image/png');
-        
-        // 1. モーダルを閉じる
-        const modalElement = document.getElementById('imageModal');
-        // window.bootstrap.Modal を使用
-        const modal = window.bootstrap.Modal.getInstance(modalElement);
-        if (modal) {
-          modal.hide();
-        }
-
-        // 2. Cropperインスタンスを破棄
+        // ここで高解像度のキャンバスをそのまま画像として使用
+        const croppedImageDataURL = croppedCanvas.toDataURL('image/png');
+        document.getElementById('prev_img').src = croppedImageDataURL;
+  
+        // モーダルを閉じる
+        modal.hide();
+  
+        // Cropperインスタンスを破棄
         this.cropper.destroy();
         this.cropper = null;
       }
