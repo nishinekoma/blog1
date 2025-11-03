@@ -1,0 +1,20 @@
+/* account information style */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9fa; /* Optional: Add background color */
+  border-bottom: 1px solid #ddd; /* Optional: Add bottom border */
+}
+
+.item__header{
+  display: flex;
+}
+.icon{
+  padding-right: 10px;
+}
+
+button{
+  text-align: left;
+}
+

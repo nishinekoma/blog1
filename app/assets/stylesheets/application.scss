@@ -13,3 +13,10 @@
  *= require_tree .
  *= require_self
  */
+// Custom bootstrap variables must be set or imported *before* bootstrap.
+@import "bootstrap";
+
+#prev_img{
+    width: 160px;
+    height: 100px;
+  }

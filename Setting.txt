@@ -1,16 +1,285 @@
+/---*to do*---/
+ユーザ情報の変更する場所をつくること。
+　　・まず、ユーザの画像表示のカスタム　（できれば範囲選択してそれをカスタム）できればやる。
+　　　　・ユーザをimageに表示されてるところに表示する。
+            https://zenn.dev/yukihaga/articles/e63a224431bc96
+            かなり参考になる
+            bootstrapを使用する。　sectionあり
+			
 
+Desktop側でなぜからエラーでたので
+gem install language_server-protocol
+Could not find language_server-protocol-3.17.0.3 in cached gems or installed locally
+
+
+記事の内部構成を考える
+	原則、　記事を作ったユーザのみが編集が可能である。
+	　　　　新たなモデル作るしかないのかな。 article と Cntent の責務範囲（明確化　clarification クラフィケイショん）を決めるひつようがある。
+			何回も追加される。
+	　　　　Content 内容
+              ・article_id (add_foreign_key)
+              ・section  見出し
+              ・text
+              ・picture
+			で、
+
+                  bin/rails generate model Comment commenter:string body:text article:references
+	を内容物とする。
+
+
+  編集モード機能
+	・編集モード起動中　と　わかりやすい表示になる。
+	・押す
+	　　title、
+	　　text、
+	　　picture
+	　　（※　どの行においても変更、削除、変更ができる。）
+	　　　　　時間があれば　カーソルを持ってきたところ　かつ　編集モード　を押した状態
+	懸念
+	　・インジェクション　テキストに
+			articles1.each do |article|
+				admin1.articles.create!(article)
+			end
+			の対策をする。
+
+
+title 
+
+text.....(複数)
+たまに画像をupし、できること。
+
+各テキストの削除ができること。
+
+
+
+pull したらやること　
 
 
 ログイン
-　　・ユーザー名
-　　・パスワード
-    
+    ・データ
+        ・name
+         ・add_check duplication
+
+        ・Email
+        ・add_check regex
+        ・add_check duplication
+　　・失敗
+        ・失敗Validationを出す
+        　・Dupulicate
+
+　　・password
+      
     ・Google
-    ・Gest
 
 サインアップ　
 　　・ユーザー名
 　　・パスワード
-　　・確認用パスワード
+　　・確認用パスワード　#一時的に使用。
 　　・Google
 
+    ・Google
+
+
+ログイン後 フロー参照
+　User custom
+    ・自身のプロフィール画像を挙げれるようにする。
+    　・なければデフォルトのまま。ログイン後に登録。
+
+  role 1
+
+
+フロー
+　・ログイン画面　
+　　　・サインアップのリンク有
+
+　・サインアップ画面
+　　　・ログイン画面のリンク有
+        ・NameとEmailにcustom validation message を設定。 User.rb
+　　↓
+　　・サインアップ後　NSSメンバーか確認画面(role1 and NSSmenber)
+　　　　　・Yes ブログを作れる権限を付与
+
+
+
+　　・ログイン後
+    ・自身の作ったarticleのみ　編集、削除
+      ・(role1 && email == user.email)
+			  ・1userにつき複数のaricleを持つ
+						user 
+							has_many article
+		article Add a comment:
+		commenter 
+		  ログイン中の　user.name
+				
+
+
+　　　　　・No　一般ユーザ
+            　　ロール名（一般ユーザ General_role）
+
+    
+懸念事項（Conserns
+NSSメンバーのみがblogの編集、削除をできるようにする
+　　NSSメンバー　：編集、削除
+　　　　　NSSメンバーの自分のblogのみをいじる。
+ユーザの情報を更新することができる。
+
+
+testdate
+tarou@example.com
+hogehoge
+
+memo login
+参考：https://qiita.com/d0ne1s/items/7c4d2be3f53e34a9dec7
+$ rails g model User name:string email:string password_digest:string
+      invoke  active_record
+      create    db/migrate/20240530185552_create_users.rb
+      create    app/models/user.rb
+      invoke    test_unit
+      create      test/models/user_test.rb
+      create      test/fixtures/users.yml
+
+$ rails db:migrate
+== 20240530185552 CreateUsers: migrating ======================================
+-- create_table(:users)
+   -> 0.0040s
+== 20240530185552 CreateUsers: migrated (0.0042s) =============================
+
+/home/nishinekma/work/Rails/blog/db/migrate/20240530185552_create_users.rb
+
+
+
+rails g controller Sessions new
+      create  app/controllers/sessions_controller.rb
+       route  get 'sessions/new'
+      invoke  erb
+      create    app/views/sessions
+      create    app/views/sessions/new.html.erb
+      invoke  test_unit
+      create    test/controllers/sessions_controller_test.rb
+      invoke  helper
+      create    app/helpers/sessions_helper.rb
+      invoke    test_unit
+
+memo singup
+https://www.geeksforgeeks.org/create-a-user-signup-form-with-email-using-ruby-on-rails/
+https://zenn.dev/yusuke_docha/articles/89b49fd29c16c6#enum_help%E3%81%AE%E5%B0%8E%E5%85%A5
+
+
+
+Generating Content 
+bin/rails -g model Content section:string
+
+
+フィルターをかけてblog機能
+　　General
+          ・見る権限とコメントする権限を持つ。
+          ・自身の作成したコメントを編集・削除する権限を持つ。
+    admin1 
+          ・signupした瞬間に 自身のblog の場所が作られる。
+          ・作るごとに横に追加していく。　
+          ・自身のブログの削除、編集、クリエイトの権限を持つ。
+          ・コメントの削除の権限のみを持つ。
+　　admin2 
+          ・全てのblogの削除、追加、編集の権限を持つ。
+          ・全てのコメント操作の権限をもつ。
+
+    temprary memo:　GPTにより良いコードがないか聞く。（冗長の削除の提案
+    　　　　　　　　 コードレビュー目的でしてもらう。
+
+/---* UML draw.io constraints(制約) *---/
+column  tab*3 :date_typt
+
+
+
+/---*改良の確認*---/
+    #基本　改良　で検索。
+    ・session_controller.rb
+
+/---* todo *---/
+.envファイルを使用する: パスワードなどの機密情報を含む.envファイルを作成し、アプリケーションからはこのファイルを読み取ります。.envファイルは通常、.gitignoreに含まれ、GitHubなどの公開リポジトリには含まれません。
+この方法でいきます。
+
+/---* google account login Management*---/
+　開発参考サイト
+      https://zenn.dev/yoiyoicho/articles/c44a80e4bb4515#%E6%84%9F%E6%83%B3 これがメイン
+
+
+　　　Google での認証方法 
+　　　・https://cloud.google.com/docs/authentication?hl=ja
+
+      ・ユーザを認証するためのGoogle ID トークンの使用
+　　　　https://cloud.google.com/endpoints/docs/openapi/authenticating-users-google-id?hl=ja
+
+      ・google API Google::Auth::IDTokens
+       https://www.rubydoc.info/github/google/google-auth-library-ruby/Google/Auth/IDTokens
+　　　
+      ・動画をみて概要が理解できる。（英語だが
+       https://developers.google.com/identity/sign-in/web/backend-auth?hl=ja
+
+
+ google API chage API料金について
+ 　・1day/10,000　回まで　
+　　　https://cloud.google.com/api-gateway/pricing?hl=ja
+   ・nssblog OAuth　同意がひつようなやつと　認証情報で許可できるURIカスタマイズ
+      https://console.cloud.google.com/apis/credentials/consent?hl=ja&project=nssblog&supportedpurview=project
+   ・NSS　クライアントID　等　audに設定する値
+  　  https://console.cloud.google.com/apis/credentials/oauthclient/537001528197-mibeq2ma6aep3ismhd4buk6jjc62jd6t.apps.googleusercontent.com?hl=ja&project=nssblog&supportedpurview=project
+
+
+
+google button custom doc 
+https://developers.google.com/identity/gsi/web/reference/html-reference?hl=ja
+
+
+
+
+
+User.find_by(email: "nishi.kazu2488@gmail.com")
+User.where(email: "nishi.kazu2488@gmail.com").destroy_all
+DBから削除
+User.destroy_all
+DB関連情報初期化　db init
+bin/rails db:reset #db/migrate/seeds.rb で初期値で入力される値を設定する。
+
+外部キー制約の概要
+https://qiita.com/SLEAZOIDS/items/d6fb9c2d131c3fdd1387
+他のテーブルのデータに参照（依存）するようにカラムにつける制約
+
+
+rails generate migration AddUserIdToArticles user:references
+bin/rails db:migrate
+
+
+画像の保存について
+https://guides.rubyonrails.org/active_storage_overview.html
+2 Setup
+$ bin/rails active_storage:install
+Copied migration 20240703113518_create_active_storage_tables.active_storage.rb from active_storage
+$ bin/rails db:migrate
+
+bootstrapを使用する。　
+参考
+	  https://github.com/twbs/bootstrap-rubygem
+	　https://qiita.com/arata0520/items/4330c2be8740bc560390
+	　https://stackoverflow.com/questions/24609912/execjsruntimeunavailable-in-rails-4-1-4
+	//(ExecJS::RuntimeUnavailable)　対策。　JavaScriptランタイムをインストール
+	・sudo apt-get install nodejs
+	（できれば範囲選択してそれをカスタム）　https://rochefort.hatenablog.com/entry/using_cropperjs_with_active_storage
+
+#Alt shift fで、タブきれいにする依存関係
+npm install -g html-beautify
+sudo gem install htmlbeautifier
+
+画面のクロップ設定 
+参考　
+https://www.youtube.com/watch?v=Nplht2tKPSU
+https://qiita.com/holy_engineer/items/a4723c3e476ccd6828a8
+https://github.com/fengyuanchen/cropperjs
+
+nishinekma@:~/work/Rails/blog1$ ./bin/rails generate stimulus image_crop
+      create  app/javascript/controllers/image_crop_controller.js
+
+bundle show bootstrap //bootstrap version確認
+# config/importmap.rb https://www.jsdelivr.com/package/npm/cropperjs
+pin "cropperjs", to: "https://ga.jspm.io/npm:cropperjs@1.6.2/dist/cropper.esm.js"
+sudo apt install -y libvips42

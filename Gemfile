@@ -33,22 +33,29 @@ gem "jbuilder"
 # gem "kredis"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
+gem "bcrypt", "~> 3.1.7" #ハッシュ化を行うのでコメント解除　 gem "bcrypt", "~> 3.1.7" 
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ mswin mswin64 mingw x64_mingw jruby ]
 
-# Reduces boot times through caching; required in config/boot.rb
+# Reduces boot times through caching; required in config/boot.rb  　config/boot.rb ファイルを開き、以下のように Bootsnap をロードするコードが含まれているか確認
 gem "bootsnap", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 1.2"
 
+# add google api 
+gem 'googleauth'
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ]
 end
 
+# add dotenv-gem 環境変数を .env から ENV にロードするための Shim。 [https://github.com/bkeepers/dotenv#customizing-rails]
+gem 'dotenv-rails'
+
+#add sassc (css)
+gem "sassc-rails"
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
@@ -60,6 +67,12 @@ group :development do
   # gem "spring"
 end
 
+gem 'solargraph', group: :development
+#add to fix server error
+gem 'language_server-protocol', '~> 3.17', '>= 3.17.0.3'
+#add bootstrap
+gem 'bootstrap', '~> 5.3.3'
+gem 'jquery-rails'
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"

@@ -1,9 +1,12 @@
 class ArticlesController < ApplicationController
-  http_basic_authenticate_with name: "dhh", password: "secret",
-   except: [:index, :show]
   def index
-    @articles = Article.all #Articleというモデル名　インスタンス変数＠articlesに代入
-    p @articles #or puts @articles
+    #もしログインしていれば、現在ログインしているUser情報を格納する
+    @user = User.find(session[:user_id]) if logged_in?
+    #roleが１のUserを格納し、そのユーザに関するArticleをロードする
+    @users = User.where(role: 1).includes(:articles)
+    p "index   @users :", @users
+
+    p "index user.article.arder(:user_id) \n" , @articles #or puts @articles
   end
 
   def show
@@ -11,15 +14,23 @@ class ArticlesController < ApplicationController
   end
 
   def new
-    @article = Article.new #新規ユーザを作成している　post
+    @article = Article.new #新規記事を作成している　post
   end
 
   def create
-    @article = Article.new(article_params)#新規ユーザを作成している　post
-
+    p "session[:user_id]    :",session[:user_id]
+    #現在ログインしているuser_idを格納
+    @user_id = User.find(session[:user_id])
+    p "create @article user.find(params[:user_id]) :",@user_id
+    #そのユーザに付属する記事を作成
+    #@article = @user_id.Article.new(article_params)
+    @article = @user_id.articles.new(article_params)
+    p "@article.Article.new(article_params) :",@article
     if @article.save
       redirect_to @article
     else
+      p "article failed",@article.errors.full_messages
+
       render :new, status: :unprocessable_entity #エラー時のメッセージ　clientが送信したリクエスト処理できないトキイに使用されえる。
 
     end

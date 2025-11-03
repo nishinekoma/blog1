@@ -27,5 +27,22 @@
 #       "yes": yup
 #       enabled: "ON"
 
+# en:
+#   activerecord:
+#     errors:
+#       models:
+#         user:
+#           attributes:
+#             password:
+#               blank: "aaaaaa"
+#             password_confirmation:
+#               blank: "aaa"
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      user:
+        name: "" # name Emailは変な空白が空くためこのように設定。
+        email: ""
+        password: ""
+        password_confirmation: ""
+        admin_password: "" #admin_check

@@ -21,12 +21,26 @@ bin/rails generate model Article title:string body:text
           DBから取得
           ・Article.find(1)
           ・Article.all　　　//すべて取得
+          DBから削除
+          ・User.destroy_all
           対話終了
           ・exit
 
+Ruby の exit と exit! の違い
+https://qiita.com/siman/items/c9eb9641a6183ee23b7c
+
+
+
     モデル ファイル  　　app/models/article.rb です。　　　　　　　 //
 
+migrate file 移行ファイルの追加　schema とかの追加
+https://qiita.com/azusanakano/items/a2847e4e582b9a627e3a
+rails g migration AddRoletoUsers role:string
+Addカラム名toテーブル名　カラム名：型
+bin/rails db:migrate
 
+migratefile 削除
+https://qiita.com/ISSO33/items/33a935cb3255c269bef2
 
 public Document Temprary memo
 Ruby DSL　https://qiita.com/getty104/items/b3fcc1f86846fb86f168
@@ -39,3 +53,65 @@ html Generate helper method
 https://guides.rubyonrails.org/form_helpers.html#a-generic-search-form
  example 
  ・checkbox,form,radiobuttons,datefields
+
+error
+ https://waterlow2013.hatenablog.com/entry/2018/06/09/150640
+
+# Rails による完全にカスタマイズされた検証エラーメッセージ
+Fully custom validation error message with Rails
+https://stackoverflow.com/questions/808547/fully-custom-validation-error-message-with-rails
+
+    password の場合は特殊 has_secure_password入れてる場合のやつね　: stack overflow link is 
+    https://stackoverflow.com/questions/17116696/password-cant-be-blank-displayed-twice\
+
+/---*改良の確認*---/
+https://developers.google.com/identity/gsi/web/reference/html-reference?hl=ja
+
+/---*to do after git pull *---/
+
+sudo gem install ruby-lsp
+sudo bundle install // gem googleauth
+
+/---*to do Read this　 *---/
+What is JWTクレーム　JSON Web Token
+https://supertokens.com/blog/what-is-jwt
+
+What is ESP(Extensible Service Proxy) . image link
+https://www.google.com/search?sca_esv=59bba6956f58be63&rlz=1C1TKQJ_jaJP1030JP1030&q=What+is+Extensible+Service+Proxy&uds=ADvngMjKpjapqO9SxPG75y7O6MClm1s47mr8HJICagJOwE5kKh9jApfxrlrvoprbhkQ-IcRXQ9PvJXafUH16FK7ZZML0Zsh5-w8-WqGPvsAptHmqR4u2VaG_DIhlx2Lh7z8RpLTohcmZt3NIPDoDrPbUbi9dIN_ddNl_1V-J-rrF4KB3xl2-Nok7Yx2flmim3uPlRcv5B5cmVS_xMaJsKKTC0a-TfDdswsDFwixOoMCa6IstEAYRzlRVZPaajInOFewMcF78PmxVY4EFmueCCzoaflIQxRpsKSTfKDUOOqvXvJrvvMxYg6_Axy75Ylwk9wj1P1mJB6WHvZvZASciHNUUejfAckzk3CQmKyAQ06RkS4DQ-nSzkHj3lxZdl9iVOtNg9X3aj_Sa_iTLh5Glkl-MrfmcTXsQEQ&udm=2&prmd=ivsnbmtz&sa=X&ved=2ahUKEwj0iYzzhsyGAxXTafUHHWGdAcMQtKgLegQICRAB&biw=1145&bih=859&dpr=1.5#vhid=6FkkP930hcyVXM&vssid=mosaic
+
+
+What is ESP
+
+ユースケース　活用事例　
+システムを使う人の目線で「このシステムは、こんなことができるのね」を
+表現してみることで、どんなシステムになるかのイメージをつかむやり方
+
+
+Ruby extends for vscode
+https://zenn.dev/code_journey_ys/articles/77adcf112a1ea1
+
+/---*　拡張機能　 *---/
+    ruby and rails
+        #ruby-rubocop //not working in wsl2. Use Solargraph as an alternative.　代替えとしてSolargraphを使用する。
+        sudo install Solargraph
+        endwise
+        Formatter/Beautify
+　　　　　sudo gem install htmlbeautifier
+erbファイルにもhtmlタグのemmetを効かせる
+setting.jsonに入れればオッケーです。拡張機能ではないです。
+
+    "emmet.includeLanguages": {
+        "ruby": "html",
+        "erb": "html"
+    },
+
+    
+    html and css 
+        https://www.youtube.com/watch?v=AxfjMZbLifQ
+
+        HTML CSS Support
+        Auto Rename Tag
+
+
+        便利複製したい行にクリック
+        Alt shift arrow

@@ -1,0 +1,11 @@
+<%= form_with url: admin_check_path, method: :post do %>
+  <%= label_tag :admin_password, "Admin Password" %>
+  <%= password_field_tag :admin_password %>
+    <!--errors-->
+    <div class="text-danger">
+      <%= sanitize(@user.errors.full_messages_for(:admin_password).join("<br>").html_safe) %>
+    </div>
+
+  <%= submit_tag "Submit" %>
+<% end %>
+<%= link_to "Regular User", root_path, method: :post%> 

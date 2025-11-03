@@ -54,6 +54,21 @@ DSL(Domain Specific Language) ドメイン固有言語　https://gihyo.jp/admin/
 
 ハードコーティング　：ソフトウェア開発においてソースコードに直接書き込む形でデータを挿入する行為を指す。
 
+Rails debug tools
+各デバックツールの概要　どんなのがあるか
+https://migisanblog.com/rails-debug-tool/
+
+
+binmode について
+前提知識　https://www.tohoho-web.com/perl/binary.htm
+    ・すべてのファイルは　「バイナリファイル」「テキストファイル」　の2種類である。
+    　・テキスト　「.txt .htm .css .cgi .pl 」　　　　　　　　　　通常のテキストエディタで読み書きできるファイル
+    　・バイナリ　「.gif .jpg .mpg .doc .xls .exe」　　　　　　　画像ファイルやワープロのファイルなど、文字や改行などの特殊文字コード以外の情報を含んでいるファイル
+
+Unix Windows ともに、　バイナリファイルを読み込むときは　binmode　を使用する
+
+
+前提知識
 /---*用語　ネット関係*---/
 リッスンアドレス　ポート番号を開いて外部からの接続を待っている状態。
 
@@ -125,7 +140,15 @@ http://127.0.0.1:3000
         ・ドキュメントに埋め込まれた Ruby コードを評価するテンプレート システムです。
     <% %>タグ
 
-ショートカットを追加
+    /---*Rails　method memo*---/
+    render redirect_to     https://qiita.com/morikuma709/items/e9146465df2d8a094d78
+    ・render　　　　　：　controller　→　view
+    ・redirect_to　　　：　controller　→　URL　→　route　→　controller　→　view
+
+    find_or_create_by https://qiita.com/taimuzu/items/0a21738d018f475d63ae
+    →引数の条件に該当するデータがあればそれを返すfind_by(attributes)、
+    　なければ新規作成create(attributes, &block)します。
+
 
 
 　Railsは　オートローディング機能があるため
@@ -180,6 +203,33 @@ blank(ブランク)名詞：空白、動詞：何も書かれていない
 empty(エンプティ)動詞：何も含んでいない
 Persist(パァシスティド)持続する、固執する、N：変わらずに続ける
 association(アソシエーション)名詞：協会、連合、連携、※共通の目的で構成された　関連付けの意味でいんじゃね
-except(エクセプト）・・・を除外する。
+except（エクセプト）・・・を除外する。
 arrival(アライバル)到着の名詞形
 arrive(アライブ)到着する　動詞
+authenticate(オウゼンティケイション)認証する
+Otherwise(アザワイズ)その他、さもなければ、
+issue(イシュー)発行と問題という意味がある。　「発行物」も「問題」も出てきたものである
+grant(グラント)「承認する」、「認める」、「与える」　名詞：「補助金」や「譲渡」
+give(ギブ)与える
+into(インテゥー)　の中へ　A into B AからBのなかへ　A　→　B
+storing() store の現在分詞　storeは「保存する」という意味です。
+            storeは何かを保存するというよりは、どこかに場所を移動して、
+            　　　　特定の場所に置いておくというようなニュアンスが強いです。
+likely 　形容詞　変わりそうな　ありそうな　可能性がありそうな　しそうだ
+　　　　　副詞 おそらく 「半分半分の確立」、「～らしい」といったニュアンス
+            主語＋be動詞 likely to～」という形で「主語が何かする可能性がある
+such as A such as B Aは例えば　Bのような？
+credentials(クレデンシャルズ) 証明や証明書、保証書を意味する名詞
+manipulation(マニピュレーション)巧妙な取り扱い、市場操作、ごまかし、小細工、(手を使っての)整骨
+- 何かまたは誰かを巧みに処理または制御する行為を指します。
+- 望ましい結果を達成するために何かを変更または変更するプロセスを説明する。
+- 特定の目標を達成するための影響力や説得の使用について話す。
+熟語
+may use 使用することができる
+
+
+Various （多様な）確認するの
+https://eikaiwa.weblio.jp/column/phrases/vocabulary/check-confirm-verify#:~:text=verify%20%E7%9C%9F%E5%AE%9F%E3%81%A7%E3%81%82%E3%82%8B%E3%81%93%E3%81%A8%E3%81%AE%E8%A8%BC%E6%98%8E&text=%E3%82%82%E3%81%A3%E3%81%B1%E3%82%89%E3%80%81%E3%81%99%E3%81%A7%E3%81%AB%E6%AD%A3%E3%81%97%E3%81%84%E3%81%A8%E8%A6%8B,%E6%84%8F%E5%91%B3%E5%90%88%E3%81%84%E3%81%A7%E7%94%A8%E3%81%84%E3%82%89%E3%82%8C%E3%81%BE%E3%81%99%E3%80%82
+
+英語文法
+It is 形容詞 ＋ to不定詞「～することは～だ」
