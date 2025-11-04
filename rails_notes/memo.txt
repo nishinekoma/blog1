@@ -115,3 +115,4 @@ setting.jsonに入れればオッケーです。拡張機能ではないです�
 
         便利複製したい行にクリック
         Alt shift arrow
+
