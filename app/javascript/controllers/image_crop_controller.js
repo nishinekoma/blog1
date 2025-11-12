@@ -1,28 +1,33 @@
+// app/javascript/controllers/image_crop_controller.js
+
 import { Controller } from "@hotwired/stimulus";
 import Cropper from 'cropperjs';
 
 export default class extends Controller {
   static targets = ["fileInput", "image", "modal"];
-  cropper = null; // Cropperインスタンスをクラスプロパティとして保持
+  cropper = null; 
 
+  //接続時実行
   connect() {
     if (this.hasFileInputTarget) {
-      //エラーが出るが、fileInput ターゲット（fileInputTarget）に対してイベントリスナーを設定しているだけなので、問題なし
       this.fileInputTarget.addEventListener('change', this.handleFileSelect.bind(this));
+      console.log("imag_crop is connected.")
     }
-    // 上記の理由により何も表示しない。
-
   }
 
-
+  // ファイルの選択検知時
   handleFileSelect(event) {
     const file = event.target.files[0];
     if (file) {
+      // ファイル読み込み開始
       const reader = new FileReader();
+      // e は　event(読み込まれたデータ)
       reader.onload = (e) => {
         const image = document.getElementById('modal_image');
+        //srcに設定。
         image.src = e.target.result;
 
+        
         const modalElement = document.getElementById('imageModal');
         const modal = new bootstrap.Modal(modalElement);
         modal.show();
@@ -44,27 +49,52 @@ export default class extends Controller {
             zoomable: true,
             background: false,
           });
-        }, { once: true }); // イベントリスナーを1回だけ実行
+        }, { once: true });
 
         // 「Save changes」ボタンのクリックイベントのバインドを一度解除してから再設定
         const saveBtn = modalElement.querySelector('.btn-primary');
-        saveBtn.removeEventListener('click', this.saveChanges); // 既存のリスナーを解除
-        saveBtn.addEventListener('click', this.saveChanges.bind(this, modal), { once: true }); // 再バインド
+        // 既存のリスナーを解除 (ここではこの行は不要な可能性が高いですが、念のため残します)
+        saveBtn.removeEventListener('click', this.saveChanges); 
+        // 新しいリスナーを再バインド（モーダルインスタンスを渡す）
+        saveBtn.addEventListener('click', this.saveChanges.bind(this, modal), { once: true }); 
       };
       reader.readAsDataURL(file);
     }
   }
 
+  // 💡 [修正点: クロップ座標の保存ロジックを追加]
   saveChanges(modal) {
     if (this.cropper) {
-      // 画像を高解像度でクロップ
+      
+      // 1. CropperJSからクロップ座標とサイズを取得 (整数値に丸める)
+      //変数cropDataは、CropperjsライブラリのXYWHのクロップ情報を返す。
+      //例cropData.xはクロップ領域の左上隅が、オリジナル画像の左上隅からどれだけ離れているか（ピクセル）。
+      const cropData = this.cropper.getData(true); 
+      
+      // 2. hidden fieldに値を設定
+      // hidden fieldのIDはHTMLで定義されているIDを使用
+      document.getElementById('image_x').value = Math.round(cropData.x);
+      document.getElementById('image_y').value = Math.round(cropData.y);
+      document.getElementById('image_w').value = Math.round(cropData.width);
+      document.getElementById('image_h').value = Math.round(cropData.height);
+      
+      // デバッグ用にコンソールに出力して値が設定されているか確認
+      console.log("Crop Coordinates Saved:", {
+          x: document.getElementById('image_x').value,
+          y: document.getElementById('image_y').value,
+          w: document.getElementById('image_w').value,
+          h: document.getElementById('image_h').value,
+      });
+
+      // 3. プレビューの更新 (ここまでのロジックは既存のものを踏襲)
       const croppedCanvas = this.cropper.getCroppedCanvas({
-        width: 200, // 表示サイズより大きめに設定
+        width: 200, 
         height: 200 
       });
   
+      // croppedCanvasがnullでないとき
       if (croppedCanvas) {
-        // ここで高解像度のキャンバスをそのまま画像として使用
+        // 画像データURLの生成:
         const croppedImageDataURL = croppedCanvas.toDataURL('image/png');
         document.getElementById('prev_img').src = croppedImageDataURL;
   

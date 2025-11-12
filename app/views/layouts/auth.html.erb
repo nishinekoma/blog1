@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css" rel="stylesheet">
+  <%# Bootstrap JavaScript %>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <%# Asset pipline %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <!-- image_crop.css signup用-->
+  <%= stylesheet_link_tag "login_signup" %>
+  <%= stylesheet_link_tag "image_crop" %>
+  <%= javascript_importmap_tags %>
+
+</head>
+<body>
+    
+    <%# sessions_controller.rb %>
+    <%# layout宣言　ここにlayout 'auth',とcontrollerで指定されたクラスの指定されたメソッドを通って、
+　　render,redirect toのhtmlを描画時に読み込み、この<%= yield %> <%# に挿入される。html.erb %>
+
+    <%= yield %>
+
+  </div>
+  
+</body>
+</html>
