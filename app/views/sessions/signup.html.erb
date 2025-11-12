@@ -57,8 +57,10 @@ https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css
     <% end %>
   </div>
 <!-- image_icon -->
+# <!-- Stimulusコントローラー紐づけ　image_crop_controller.js -->
 <div class="mb-3" data-controller="image-crop">
   <%= form.label :image_icon, "Image Icon" %>
+  
   <%= image_tag "image.png", id: :prev_img %>
   <canvas id="cropped_canvas" style="display:none"></canvas>
   <%= form.file_field :image_icon, id: :trim_img_uploder, direct_upload: true, class: "form-control",
@@ -109,7 +111,7 @@ https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" data-action="image-crop#saveCropData">Save changes</button>
       </div>
     </div>
   </div>

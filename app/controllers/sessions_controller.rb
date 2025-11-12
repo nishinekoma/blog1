@@ -25,10 +25,7 @@ class SessionsController < ApplicationController
     redirect_to login_path, allow_other_host: true
   end
 
-  # #private
-  #   def user_params
-  #     params.require(:user).permit(:name, :email, :password, :password_confirmation)
-  #   end
+
 # --- singup function --- #
   def signup #View signup.html.erb
     #Userのモデルオブジェクトを生成
@@ -78,10 +75,14 @@ class SessionsController < ApplicationController
       @user = current_user
     end
 
-    private
-      def user_params
-        p "user_params is    \n", params
-        params.require(:user).permit(:name, :email, :password, :password_confirmation, :image_icon)
-      end
-
-end
+  private
+    def user_params
+      p "user_params is \n", params
+      # ここにクロップ情報用の4つのパラメータを追加します
+      params.require(:user).permit(
+        :name, :email, :password, :password_confirmation, :image_icon,
+        #CropperJSから送られるhidden fieldのキーを追加
+        :image_x, :image_y, :image_w, :image_h
+      )
+    end
+  end
