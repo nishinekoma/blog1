@@ -150,9 +150,24 @@ http://127.0.0.1:3000
     　なければ新規作成create(attributes, &block)します。
 
 
+Partialファイル
+  役割: View の一部を切り出して再利用可能にするERBファイルです。
+
+  目的: HTML構造と、その構造に関わる少量のロジック（例：if や each ループ）をカプセル化し、メインのViewファイルの可読性を高めます
+
+  作成　/app/views/shared/_error_messages.html.erb のように、ファイル名の先頭にアンダースコア (_) を付けて作成します
+
 
 　Railsは　オートローディング機能があるため
         いちいちrequireする必要がない。
+
+ヘルパーメソッド (Helper Method) とは？
+  役割: RubyのコードをViewから切り出して再利用可能にするメソッドです。
+
+  目的: 複雑な計算や条件分岐、またはHTMLタグを生成しない純粋なロジックをViewから分離します。
+
+  例: pluralize(count, singular) (単語を複数形にする)、time_ago_in_words(time) (時間差を分かりやすく表示する)。
+
 /---*2024/02/08~ React_Typescript.txtから英語続き。*---/
 Reveal(リベアル)動詞：　N:隠されたものを公開する。　明かす、明らかにする、正体を表す。見せる。
 Bundle(バンドル)動詞：　包む、束ねる

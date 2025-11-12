@@ -1,4 +1,8 @@
 class SessionsController < ApplicationController
+# --- 共通layout --- #
+  # newアクションとcreateアクションで auth.html.erb を使用
+  layout 'auth', only: [:login ,:signup]
+
 # --- login function --- #
   def login #View login.html.erb
   end
@@ -13,7 +17,7 @@ class SessionsController < ApplicationController
       redirect_to root_url
       p "login successed"
     else
-      render login
+      render :login,status: :unprocessable_entity
       p "login failed"
     end
   end

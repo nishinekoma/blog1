@@ -13,3 +13,6 @@ Rails.application.config.assets.version = "1.0"
 
 # config/initializers/assets.rb
 Rails.application.config.assets.precompile += %w(bootstrap.min.js popper.js)
+
+#login signup 用に読み込む個別cssファイル群
+Rails.application.config.assets.precompile += %w( login_signup.css image_crop.css )

@@ -1,0 +1,61 @@
+body{
+  /* 上側のマージンは残す */
+  margin-top: 60px;
+  margin-left: 30px;
+  margin-right: 30px;
+  
+  /* Flexコンテナの定義は維持 */
+  display: flex; 
+  flex-direction: column; 
+  
+  /* 子要素を水平方向に中央寄せ */
+  align-items: center; 
+  
+  /* 垂直方向の中央寄せを解除し、上端から配置する */
+  justify-content: flex-start; /* これが打ち消しの役割を果たす */
+  
+  /* bodyの高さをビューポートいっぱいに広げる */
+  min-height: 100vh;
+}
+.mb-3{
+  width: 300px;
+}
+.googlebutton{
+  width: 300px;
+}
+
+.btn-primary{
+  width: 300px;
+}
+
+/* or射線 */
+.separator-or {
+    /* 基準となる位置を設定 */
+    position: relative;
+    width: 300px;
+    /* 上下マージンは Bootstrap の my-4 (margin-y) で設定済み */
+}
+
+.separator-or hr {
+    /* hrタグ（水平線）のスタイルを微調整 */
+    border-top: 5px solid black;
+    margin: 0; /* Bootstrapのデフォルトマージンをリセット */
+    opacity: 0.7 !important;
+
+}
+
+.separator-or .or-text {
+    /* "OR" テキストのスタイル */
+    background-color: #fff; /* 背景色を白にして、線の上に浮き上がらせる */
+    color: black; /* テキストの色 */
+    padding: 0 10px; /* 左右に少し余白 */
+    font-size: 0.85rem;
+    font-weight: 500;
+    
+    /* 🚨 線の中心に配置する */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+/* End or射線　 */

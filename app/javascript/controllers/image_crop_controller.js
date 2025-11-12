@@ -4,24 +4,30 @@ import { Controller } from "@hotwired/stimulus";
 import Cropper from 'cropperjs';
 
 export default class extends Controller {
-  static targets = ["fileInput", "image", "modal"]; // "modal"ターゲットはHTML側に追加が推奨されます
+  static targets = ["fileInput", "image", "modal"];
   cropper = null; 
 
+  //接続時実行
   connect() {
     if (this.hasFileInputTarget) {
       this.fileInputTarget.addEventListener('change', this.handleFileSelect.bind(this));
+      console.log("imag_crop is connected.")
     }
   }
 
-
+  // ファイルの選択検知時
   handleFileSelect(event) {
     const file = event.target.files[0];
     if (file) {
+      // ファイル読み込み開始
       const reader = new FileReader();
+      // e は　event(読み込まれたデータ)
       reader.onload = (e) => {
         const image = document.getElementById('modal_image');
+        //srcに設定。
         image.src = e.target.result;
 
+        
         const modalElement = document.getElementById('imageModal');
         const modal = new bootstrap.Modal(modalElement);
         modal.show();
@@ -61,6 +67,8 @@ export default class extends Controller {
     if (this.cropper) {
       
       // 1. CropperJSからクロップ座標とサイズを取得 (整数値に丸める)
+      //変数cropDataは、CropperjsライブラリのXYWHのクロップ情報を返す。
+      //例cropData.xはクロップ領域の左上隅が、オリジナル画像の左上隅からどれだけ離れているか（ピクセル）。
       const cropData = this.cropper.getData(true); 
       
       // 2. hidden fieldに値を設定
@@ -84,7 +92,9 @@ export default class extends Controller {
         height: 200 
       });
   
+      // croppedCanvasがnullでないとき
       if (croppedCanvas) {
+        // 画像データURLの生成:
         const croppedImageDataURL = croppedCanvas.toDataURL('image/png');
         document.getElementById('prev_img').src = croppedImageDataURL;
   
