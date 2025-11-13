@@ -1,6 +1,7 @@
 <% if logged_in? %><!--login 必須にする--->
       <!--logged user -->
       <!-- object-fit でアスペクト比(横と縦の長さの比率) を守った状態でやる。 rounded-circle で円形表示。-->
+<%= turbo_page_requires_reload %>
 <%= image_tag @user.cropped_icon(size: 100), 
     class: "rounded-circle", 
     style: "object-fit: cover;" %>

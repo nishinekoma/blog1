@@ -1,4 +1,4 @@
-<%= form_with url: admin_check_path, method: :post do %>
+<%= form_with url: admin_check_path, method: :post, data: { turbo: 'false' } do %>
   <%= label_tag :admin_password, "Admin Password" %>
   <%= password_field_tag :admin_password %>
     <!--errors-->

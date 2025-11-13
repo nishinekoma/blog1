@@ -1,7 +1,7 @@
 <h1>Decide your role</h1>
 <h1>Choose Your Role</h1>
 <!--admin_check routes.rb 参照-->
-<%= link_to "Administrator", admin_check_path %>
+<%= link_to "Administrator", admin_check_path, method: :post %>
 <%# pass through as is default role general%>
 <%= link_to "Regular User", root_path, method: :post%> 
 <%# <%= link_to "Regular User", root_path, method: :post, data: { params: { role: :general } } %> 

@@ -61,4 +61,3 @@ class User < ApplicationRecord
 end
 
 # has_secure_password　public_method doc:https://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password
-# User.create!(name: "あどみん",email: "admin@admin.com",password: "admin",password_confirmation: "admin",role: 1)

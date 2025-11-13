@@ -1,0 +1,40 @@
+rails assets:clobber
+aaa5@example.com
+
+# Userモデルに登録されているDB削除
+User.destroy_all
+ User情報削除
+  関連づけられているarticleも
+
+# Userモデルのスキーマ（カラム）を表示
+User.column_names
+
+# User.create!(name: "あどみん",email: "admin@admin.com",password: "admin",password_confirmation: "admin",role: 1)
+
+# カラムの詳細（データ型、NULL許可など）を表示
+User.columns
+
+# データベース接続アダプタ経由でテーブルリストを取得
+ActiveRecord::Base.connection.tables
+
+# IDが 1 のUserを取得
+User.find(1)
+
+# nameが 'alice' のUserを取得
+User.find_by(name: 'alice')
+
+# 全てのUserレコードを取得して表示
+User.all
+# 全てのArticleレコードを取得して表示
+Article.all
+
+# 全ユーザーを配列として取得
+all_users = User.all.to_a 
+
+# 1ページ目 (0から5個)
+page_1 = all_users[0, 5] 
+puts page_1
+
+# 2ページ目 (5から5個)
+page_2 = all_users[5, 5]
+puts page_2

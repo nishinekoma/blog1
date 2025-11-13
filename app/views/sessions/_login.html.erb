@@ -1,7 +1,6 @@
 <h1>ログイン</h1>
 <!--post login route.rb-->
-<!--local: true :Ajaxではなく通常のHTTPリクエストとして送信される。-->
-<%= form_with(url: login_path, local: true) do |f| %>
+<%= form_with(url: login_path, data: { turbo: 'false' }) do |f| %>
   
   <!-- name -->
   <div class="mb-3">
