@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
 # --- 共通layout --- #
   # newアクションとcreateアクションで auth.html.erb を使用
-  layout 'auth', only: [:login ,:signup]
+  layout "auth", only: [:login ,:signup,:update_admin_role,:admin_check]
 
 # --- login function --- #
   def login #View login.html.erb
@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
     # userが存在する(nil)でない　かつ　パスワードが正しいか比較
     if user && user.authenticate(params[:password])
       log_in user
-      redirect_to root_url
+      redirect_to root_path, status: :see_other
       p "login successed"
     else
       render :login,status: :unprocessable_entity
@@ -46,15 +46,16 @@ class SessionsController < ApplicationController
 
   def update_admin_role
     p "update_admin_role colled"
-    admin_password = ENV['ADMIN_PASSWORD'] #admin authenticate word
+    # admin_password = ENV['ADMIN_PASSWORD'] #admin authenticate word
+    admin_password = 'adminmin' #admin authenticate word
     #現在のユーザ返す
     @user = current_user
     # :admin_password : 入力されたパスワード
-    if params[:admin_password] == ENV['ADMIN_PASSWORD']
+    if params[:admin_password] == admin_password
       p "update user" , @user
       @user.update_attribute(:role, 1)
       p "update user" , @user
-      redirect_to root_path, notice: '管理者に変更されました。'
+      redirect_to reset_context_path, notice: '管理者に変更されました。'
     else
       p "update failed" , @user
       #エラーメッセージ表示

@@ -1,5 +1,4 @@
 class ArticlesController < ApplicationController
-  layout 'application'
   
   def index
     if logged_in?
@@ -65,6 +64,12 @@ class ArticlesController < ApplicationController
   end
   
 
+
+  def reset_context
+    # フラッシュメッセージを引き継いで root_path にリダイレクト
+    redirect_to root_path, notice: flash[:notice]
+  end
+  
   private #ArticlesControllerのみで使用可能にし、外部からのアクセスをなくす。
     def article_params
       params.require(:article).permit(:title, :body, :status)
