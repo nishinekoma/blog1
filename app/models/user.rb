@@ -51,6 +51,11 @@ class User < ApplicationRecord
     end
   end
 
+  #　現在のuserに関連付けられた記事数を返すメソッド
+  def articles_count
+    # (<%= @user.article.exists?(:articles) %>)
+  end
+
     #確認用パスワードと一致しているか検査しerrors message追加。
     private
       def passwords_match

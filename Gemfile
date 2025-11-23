@@ -78,3 +78,12 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+# ERD diagram generation tool [ https://github.com/voormedia/rails-erd ]
+group :development do
+  gem "rails-erd"
+end
+
+
+gem 'htmlbeautifier'
+gem "tailwindcss-ruby", "3.4.13"

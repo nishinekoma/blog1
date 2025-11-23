@@ -1,0 +1,44 @@
+<% if logged_in? %><!--login 必須にする--->
+  <!-- logged user -->
+  <!-- object-fit でアスペクト比(横と縦の長さの比率) を守った状態でやる。 rounded-circle で円形表示。-->
+<%= turbo_page_requires_reload %>
+
+<div class="main-layout-container d-flex">
+
+  <%= render 'shared/sidebar', user: @user %>
+
+  <div class="contents">
+    <header id="topbar-wrapper" aria-label="Top Bar">
+      <div id="topbar" class="d-flex justify-content-between align-items-center  px-lg-3 h-100">
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumb mb-0">
+            
+      </div>
+    </header>
+      
+    Our blog has <%= Article.public_count %> articles and counting!
+    <!--role 1 のuserに関連付けられたblogを出す-->
+    <% @users.each do |user| %>
+      <h2><%= user.name %></h2>
+      <h5><%= user.articles.count %> </h5>
+      <% if user.articles.any? %>
+        <ul>
+          <% user.articles.each do |article| %>
+            <% unless article.archived? %>
+              <li>
+                <%= link_to article.title, article %>
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+      <% end %>
+    <% end %>
+    <%= link_to "New Article", new_article_path %>
+    <%= link_to "ログアウト", logout_path, method: :delete %>
+    <p>Find me in app/views/articles/index.html.erb http://localhost:3000/articles</p>
+  </div>
+
+</div>
+<% else %>
+  <%= render 'sessions/login' %>
+<% end %>

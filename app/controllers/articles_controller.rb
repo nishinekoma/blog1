@@ -1,19 +1,4 @@
 class ArticlesController < ApplicationController
-  
-  def index
-    if logged_in?
-      #もしログインしていれば、現在ログインしているUser情報を格納する
-      @user = User.find(session[:user_id]) 
-      #roleが１のUserを格納し、そのユーザに関するArticleをロードする
-      @users = User.where(role: 1).includes(:articles)
-
-      p "index   @users :", @users
-      p "index user.article.arder(:user_id) \n" , @articles #or puts @articles
-
-    else
-      redirect_to login_url
-    end
-  end
 
   def show
     @article = Article.find(params[:id])
@@ -61,13 +46,6 @@ class ArticlesController < ApplicationController
     @article.destroy
 
     redirect_to root_path, status: :see_other
-  end
-  
-
-
-  def reset_context
-    # フラッシュメッセージを引き継いで root_path にリダイレクト
-    redirect_to root_path, notice: flash[:notice]
   end
   
   private #ArticlesControllerのみで使用可能にし、外部からのアクセスをなくす。

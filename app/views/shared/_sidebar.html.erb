@@ -1,0 +1,33 @@
+<%# _sidebar.html.erb %>
+<aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column">
+  <div class="user-icon mt-5 mb-4 w-100">
+    <%= image_tag user.cropped_icon(size: 120), 
+      class: "rounded-circle", 
+      style: "object-fit: cover;" %>
+  </div>
+
+  <h1 class="side-title mb-4">
+    <%= user.name %>の<br>
+    articles
+  </h1>
+
+  <nav class="flex-column flex-grow-1 w-100 ps-0">
+    <ul class="nav">
+      <li class="nav-item w-100 active">
+        <i class="fa-solid fa-house-chimney fa-1x"></i><span>Home</span>
+      </li>
+      <li class="nav-item w-100">
+        <i class="fa-solid fa-address-card"></i><span>Profile</span>
+      </li>
+      <li class="nav-item w-100">
+        <i class="fa-solid fa-tags"></i><span>tags</span>
+      </li>
+      <li class="nav-item w-100">
+        <i class="fa-solid fa-book"></i><span>my articles</span>(<%= user.articles.count %>)
+      </li>
+      <li class="nav-item w-100">
+        <i class="fa-solid fa-user-check"></i><span>follow-list</span>
+      </li>
+    </ul>
+  </nav>
+</aside>

@@ -1,12 +1,14 @@
 Rails.application.routes.draw do
-  root "articles#index"
+  root "home#index" #root path設定
   get 'sessions/new'
   
-    resources :articles do
+  # Article routes （一時的にhomeにいくためindex以外）
+    resources :articles, except: [:index]do
       resources :comments#登録されている記事などのリソースのコレクションをすべてマップ
   end
 
-  get 'reset_context', to: 'articles#reset_context', as: 'reset_context'
+  # role update route success rediretct
+  get 'reset_context', to: 'sessions#reset_context', as: 'reset_context'
 
   #loginpage routes
   get    '/login',   to: 'sessions#login' #request http://localhost:3000/login to sessions_controller  def login

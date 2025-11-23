@@ -46,8 +46,7 @@ class SessionsController < ApplicationController
 
   def update_admin_role
     p "update_admin_role colled"
-    # admin_password = ENV['ADMIN_PASSWORD'] #admin authenticate word
-    admin_password = 'adminmin' #admin authenticate word
+    admin_password = ENV['ADMIN_PASSWORD'] #admin authenticate word
     #現在のユーザ返す
     @user = current_user
     # :admin_password : 入力されたパスワード
@@ -63,6 +62,11 @@ class SessionsController < ApplicationController
       @user.errors.add(:admin_password, "パスワードが一致しません。<br>NSSメンバーでない方はregularからログインしてください。")
       render :admin_check , status: :unprocessable_entity
     end
+  end
+
+  def reset_context
+    # フラッシュメッセージを引き継いで root_path にリダイレクト
+    redirect_to root_path, notice: flash[:notice]
   end
   
   # --- check routes --- #

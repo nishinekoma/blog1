@@ -1,0 +1,45 @@
+#sidebar ul li.nav-item {
+    opacity: .9;
+    padding-left: 0.7rem;
+    font-size: 110%;
+    font-weight: 600;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-right: 25px;
+    border-radius: .75rem;
+}
+#sidebar ul li.nav-item.active {
+  color: #1d1d1d;
+  background-color: rgba(223,223,223,0.64);
+}
+.rounded-circle{
+  box-shadow: rgb(0 0 0 / 96%) 0 0 0 3px;
+}
+#sidebar ul li.nav-item span{
+  padding-left: 10px;
+}
+
+#sidebar ul li.nav-item i{
+  width: 30px;
+}
+
+#sidebar {
+    padding-left: 2.5rem !important;
+    padding-right: 0px;
+    border-right: 2px solid #615e5e;
+    background: #f6f8fa;
+    /* position: fixed; */
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 260px;
+    z-index: 99;
+}
+
+/* .user-icon{
+} */
+
+.side-title{
+    font-weight: 900;
+    color: rgba(113,113,113,1);
+}

@@ -11,6 +11,10 @@ Desktop側でなぜからエラーでたので
 gem install language_server-protocol
 Could not find language_server-protocol-3.17.0.3 in cached gems or installed locally
 
+icon アイコンツール
+https://fontawesome.com/sessions/sign-in
+nishi.kazu2488@gmail.com
+taskkazuma24
 
 記事の内部構成を考える
 	原則、　記事を作ったユーザのみが編集が可能である。
