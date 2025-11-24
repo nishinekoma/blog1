@@ -5,9 +5,10 @@ class HomeController < ApplicationController
       @user = User.find(session[:user_id]) 
       #roleが１のUserを格納し、そのユーザに関するArticleをロードする
       @users = User.where(role: 1).includes(:articles)
-
+      # statusがpublicの記事を新しい順に並び替えて格納、関連するuser情報も一緒にロードする
+      @articles_desc_public = Article.joins(:user).where(status: 'public').order(created_at: :desc).includes(:user)
       p "index   @users :", @users
-      p "index user.article.arder(:user_id) \n" , @articles #or puts @articles
+      p "Article.order(created_at: :desc).includes(:user) \n" , @articles_desc_public#or puts @articles
 
     else
       redirect_to login_url

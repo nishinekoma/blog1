@@ -2,7 +2,7 @@
   <!-- logged user -->
   <!-- object-fit でアスペクト比(横と縦の長さの比率) を守った状態でやる。 rounded-circle で円形表示。-->
 <%= turbo_page_requires_reload %>
-
+<%= stylesheet_link_tag "index" %>
 <div class="main-layout-container d-flex">
 
   <%= render 'shared/sidebar', user: @user %>
@@ -19,20 +19,32 @@
     Our blog has <%= Article.public_count %> articles and counting!
     <!--role 1 のuserに関連付けられたblogを出す-->
     <% @users.each do |user| %>
-      <h2><%= user.name %></h2>
-      <h5><%= user.articles.count %> </h5>
-      <% if user.articles.any? %>
-        <ul>
+      <!-- userがarticlesを持っているか。  -->
+      <div class="user-articles">
+        <% if user.articles.any? %>
           <% user.articles.each do |article| %>
+            <!-- articleがpublicかどうか。 -->
             <% unless article.archived? %>
-              <li>
+              <div class="article-public">
                 <%= link_to article.title, article %>
-              </li>
+              </div>
             <% end %>
           <% end %>
-        </ul>
-      <% end %>
+        <% end %>
+        
+        <h2><%= user.name %></h2>
+        <h5><%= user.articles.count %> </h5>
+      </div>
+
     <% end %>
+
+    <!-- 投稿された最新の記事を降順に表示　-->
+    <% @articles_desc_public.each do |article| %>
+      <%= article.title %>
+      <%= article.user.name %>
+      
+    <% end %>
+
     <%= link_to "New Article", new_article_path %>
     <%= link_to "ログアウト", logout_path, method: :delete %>
     <p>Find me in app/views/articles/index.html.erb http://localhost:3000/articles</p>
