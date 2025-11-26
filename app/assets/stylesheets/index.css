@@ -2,3 +2,11 @@
   width: 150px;
   border: solid 1px #999999;
 }
+
+.user-icon{
+  margin-top: 5px;
+}
+
+main{
+  width: 70%;
+}

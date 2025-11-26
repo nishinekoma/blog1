@@ -12,9 +12,13 @@
   color: #1d1d1d;
   background-color: rgba(223,223,223,0.64);
 }
-.rounded-circle{
+.rounded-custom-black{
   box-shadow: rgb(0 0 0 / 96%) 0 0 0 3px;
 }
+.rounded-custom-gray{
+  box-shadow: rgba(134, 131, 131, 0.96) 0 0 0 1.5px;
+}
+#side
 #sidebar ul li.nav-item span{
   padding-left: 10px;
 }

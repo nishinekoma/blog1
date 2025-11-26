@@ -7,50 +7,71 @@
 
   <%= render 'shared/sidebar', user: @user %>
 
-  <div class="contents">
+  <div class="container px-xxl-5">
     <header id="topbar-wrapper" aria-label="Top Bar">
       <div id="topbar" class="d-flex justify-content-between align-items-center  px-lg-3 h-100">
         <nav aria-label="Breadcrumb">
           <ol class="breadcrumb mb-0">
-            
+          home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          Our blog has <%= Article.public_count %> articles and counting!  
       </div>
     </header>
+
+    <main>
+
+      <!-- 投稿された最新の記事を降順に表示　-->
+      <% @articles_desc_public.each do |article| %>
       
-    Our blog has <%= Article.public_count %> articles and counting!
-    <!--role 1 のuserに関連付けられたblogを出す-->
-    <% @users.each do |user| %>
-      <!-- userがarticlesを持っているか。  -->
-      <div class="user-articles">
-        <% if user.articles.any? %>
-          <% user.articles.each do |article| %>
-            <!-- articleがpublicかどうか。 -->
-            <% unless article.archived? %>
-              <div class="article-public">
-                <%= link_to article.title, article %>
-              </div>
-            <% end %>
+        <div class="article-lists d-flex align-items-left mb-3">
+          <!-- 投稿したUserのiconを表示 -->
+          <div class="user-icon me-3">
+            <%= image_tag article.user.cropped_icon(size: 35), 
+              class: "rounded-circle rounded-custom-gray", 
+              style: "object-fit: cover;" %>
+          </div>
+          <!-- 記事タイトルと投稿者名を表示 -->
+          <%= link_to(article, class: "text-decoration-none w-100") do %>
+            <div class="article-item border border-2 rounded p-2">
+              <h4 class="text-dark"><%= article.title %></h4>
+              <p class="text-black-50">by <%= article.user.name %></p>
+            </div>
           <% end %>
-        <% end %>
-        
-        <h2><%= user.name %></h2>
-        <h5><%= user.articles.count %> </h5>
-      </div>
+        </div>
 
-    <% end %>
+      <% end %>
 
-    <!-- 投稿された最新の記事を降順に表示　-->
-    <% @articles_desc_public.each do |article| %>
-      <%= article.title %>
-      <%= article.user.name %>
-      
-    <% end %>
+      <br><br><br><br>
 
-    <%= link_to "New Article", new_article_path %>
-    <%= link_to "ログアウト", logout_path, method: :delete %>
-    <p>Find me in app/views/articles/index.html.erb http://localhost:3000/articles</p>
-  </div>
 
-</div>
+      <!--role 1 のuserに関連付けられたblogを出す-->
+      <% @users.each do |user| %>
+        <!-- userがarticlesを持っているか。  -->
+        <div class="user-articles">
+          <% if user.articles.any? %>
+            <% user.articles.each do |article| %>
+              <!-- articleがpublicかどうか。 -->
+              <% unless article.archived? %>
+                <div class="article-public">
+                  <%= link_to article.title, article %>
+                </div>
+              <% end %>
+            <% end %>
+          
+          <h2><%= user.name %></h2>
+          <h5><%= user.articles.count %> </h5>
+        </div>
+
+      <% end %>
+
+
+
+        <%= link_to "New Article", new_article_path %>
+        <%= link_to "ログアウト", logout_path, method: :delete %>
+        <p>Find me in app/views/articles/index.html.erb http://localhost:3000/articles</p>
+    </main>
+  </div><!-- container  -->
+</div><!-- main-layout-container d-flex -->
+<% end %>
 <% else %>
   <%= render 'sessions/login' %>
 <% end %>
