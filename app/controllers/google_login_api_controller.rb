@@ -30,13 +30,19 @@ class GoogleLoginApiController < ApplicationController
       p params[:credential]
       payload = Google::Auth::IDTokens.verify_oidc(params[:credential], aud: ENV['GOOGLE_CLIENT_ID'])
       p "decoded payload is " , payload
-      # find_or_create_by 引数の条件に該当するデータを見つける。
-      user = User.find_or_create_by(email: payload['email'])
-      # Userモデルからid を見つけログインしているユーザとして session に保存 sessions_helper
+
+      # DBに登録されていればレコード取得　なければ　nil
+      user = User.find_by(email: payload['email'])
       p "user :" ,user
-      log_in user
-      # redirect_to で、　コントローラcontroller　→　URL　→　route　→　controller　→　view　遷移する。
-      redirect_to root_path, notice: 'ログインしました'
+      
+      if user.nil?
+        redirect_to login_path, alert: '登録されていません signupしてください。'
+        p "redirect_to login_path, notice: '登録されていません signupしてください。'"
+      else
+        log_in user
+        # redirect_to で、　コントローラcontroller　→　URL　→　route　→　controller　→　view　遷移する。
+        redirect_to root_path, alert: 'ログインしました'
+      end
     end
   
     #    ---- signup ----  

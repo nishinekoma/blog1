@@ -1,3 +1,11 @@
+<!-- alert表示 (googleエラー時用)-->
+  <!-- ここにFlashメッセージの表示を追加します -->
+  <% flash.each do |message_type, message| %>
+    <div class="text-danger">
+      <%= message %>
+    </div>
+  <% end %>
+
 <h1>ログイン</h1>
 <!--post login route.rb-->
 <%= form_with(url: login_path, data: { turbo: 'false' }) do |f| %>

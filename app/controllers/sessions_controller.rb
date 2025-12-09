@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
 # --- 共通layout --- #
   # newアクションとcreateアクションで auth.html.erb を使用
-  layout "auth", only: [:login ,:signup,:update_admin_role,:admin_check]
+  layout "auth", only: [:login ,:create ,:signup,:update_admin_role,:admin_check]
 
 # --- login function --- #
   def login #View login.html.erb
