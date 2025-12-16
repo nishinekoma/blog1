@@ -21,11 +21,12 @@
 
       <!-- 投稿された最新の記事を降順に表示　-->
       <% @articles_desc_public.each do |article| %>
-      
+
         <div class="article-lists d-flex align-items-left mb-3">
           <!-- 投稿したUserのiconを表示 -->
           <div class="user-icon me-3">
-            <%= image_tag article.user.cropped_icon(size: 35), 
+
+            <%= image_tag UserDecorator.new(article.user).cropped_icon(size: 35), 
               class: "rounded-circle rounded-custom-gray", 
               style: "object-fit: cover;" %>
           </div>
@@ -45,7 +46,7 @@
 
       <!--role 1 のuserに関連付けられたblogを出す-->
       <% @users.each do |user| %>
-        <!-- userがarticlesを持っているか。  -->
+        <!-- userがarticlesを持っているか。-->
         <div class="user-articles">
           <% if user.articles.any? %>
             <% user.articles.each do |article| %>
@@ -58,7 +59,7 @@
             <% end %>
           
           <h2><%= user.name %></h2>
-          <h5><%= user.articles.count %> </h5>
+          <h5><%= decorated_user.articles.count %> </h5>
         </div>
 
       <% end %>
@@ -69,9 +70,9 @@
         <%= link_to "ログアウト", logout_path, method: :delete %>
         <p>Find me in app/views/articles/index.html.erb http://localhost:3000/articles</p>
     </main>
+    
   </div><!-- container  -->
 </div><!-- main-layout-container d-flex -->
-<% end %>
 <% else %>
   <%= render 'sessions/login' %>
 <% end %>

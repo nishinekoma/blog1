@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_11_10_115242) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_16_090021) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -40,12 +40,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_10_115242) do
   end
 
   create_table "articles", force: :cascade do |t|
-    t.string "title"
-    t.text "body"
+    t.string "title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status", default: "public"
     t.integer "user_id", null: false
+    t.text "summary", default: "", null: false
     t.index ["user_id"], name: "index_articles_on_user_id"
   end
 
@@ -57,6 +57,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_10_115242) do
     t.datetime "updated_at", null: false
     t.string "status", default: "public"
     t.index ["article_id"], name: "index_comments_on_article_id"
+  end
+
+  create_table "content_blocks", force: :cascade do |t|
+    t.integer "article_id", null: false
+    t.string "block_type"
+    t.text "content"
+    t.string "image_url"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_content_blocks_on_article_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -76,4 +87,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_10_115242) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "articles", "users"
   add_foreign_key "comments", "articles"
+  add_foreign_key "content_blocks", "articles"
 end

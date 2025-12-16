@@ -1,7 +1,7 @@
 <%# _sidebar.html.erb %>
 <aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column">
   <div class="user-icon mt-5 mb-4 w-100">
-    <%= image_tag user.cropped_icon(size: 120), 
+    <%= image_tag UserDecorator.new(user).cropped_icon(size: 120), 
       class: "rounded-circle rounded-custom-black", 
       style: "object-fit: cover;" %>
   </div>
@@ -23,7 +23,7 @@
         <i class="fa-solid fa-tags"></i><span>tags</span>
       </li>
       <li class="nav-item w-100">
-        <i class="fa-solid fa-book"></i><span>my articles</span>(<%= user.articles.count %>)
+        <i class="fa-solid fa-book"></i><span>my articles</span>(<%= UserDecorator.new(user).articles_count %>)
       </li>
       <li class="nav-item w-100">
         <i class="fa-solid fa-user-check"></i><span>follow-list</span>
