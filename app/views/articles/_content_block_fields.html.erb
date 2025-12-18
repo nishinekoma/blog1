@@ -1,0 +1,38 @@
+<!-- app/views/articles/_content_block_fields.html.erb -->
+<!-- content_blockの入力定義-->
+<div class="nested-form-wrapper" data-new-record="<%= index == "NEW_RECORD" %>">
+  <hr>
+  <!-- 既存のIDがある場合はそれも含める -->
+  <%= f.hidden_field :content_blocks_attributes, 
+      name: "article[content_blocks_attributes][#{index}][id]", 
+      value: block['id'] if block['id'] %>
+
+  <div>
+    <strong>タイプ: </strong>
+    <%= f.hidden_field :content_blocks_attributes, 
+        name: "article[content_blocks_attributes][#{index}][block_type]", 
+        value: block['block_type'], 
+        data: { nested_form_target: "blockType" } %>
+    <span><%= block['block_type'] %></span>
+  </div>
+
+  <div>
+    <%= f.label "内容" %><br>
+    <%= f.text_area :content_blocks_attributes, 
+        name: "article[content_blocks_attributes][#{index}][content]", 
+        value: block['content'] %>
+  </div>
+
+  <div>
+    <%= f.label "Position" %><br>
+    <%= f.number_field :content_blocks_attributes, 
+        name: "article[content_blocks_attributes][#{index}][position]", 
+        value: block['position'] %>
+  </div>
+
+  <!-- 削除用フラグ -->
+  <%= f.hidden_field :content_blocks_attributes, 
+      name: "article[content_blocks_attributes][#{index}][_destroy]", 
+      value: 0 %>
+  <button type="button" data-action="click->nested-form#remove">このブロックを削除</button>
+</div>

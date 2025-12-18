@@ -9,9 +9,13 @@ class ArticleForm
 
   # Article モデルの属性　型変換定義
   attribute :title, :string
-  attribute :summary, :text
+  attribute :summary, :string
   attribute :user_id, :integer
   attribute :id, :integer
+  attribute :status, :string, default: 'public'
+
+  # 保存した記事インスタンスを保持するための属性
+  attr_reader :article
 
   # ContentBlock の属性を格納するための配列
   # form_with の仕様に合わせ、初期値として空の配列を定義
@@ -30,17 +34,14 @@ class ArticleForm
     # db/schemaにArticleFormにはcontent_blocksテーブルは存在しないが、ArticleFormクラス内でcontent_blocks_attributesとして定義されている
     # content_blocks_attributesはattr_accessorで定義されているため、ArticleFormのインスタンス変数として利用可能
     # リクエストごとにcontrollerからユーザが現在いるフォームの複数のデータを受け取り、ArticleForm.newされることでpresent?を判定できる。
-    if self.id.present?
-      # 既存の記事取得、紐づいているContentBlockも取得
+    if self.id.present? && self.content_blocks_attributes.blank?
       article = Article.find(self.id)
-      # Article.idに紐づいている複数のContentBlockを取得し格納
       self.content_blocks_attributes = article.content_blocks.map do | block |
-        # 既存のブロックをハッシュ形式でセット
         block.attributes.slice('id', 'block_type', 'content', 'image_url', 'position')
       end
     else
-      # 新規作成時はからのブロックリストを初期化 ||= はself.content_blocks_attributesが未定義なら[]を代入する
-      self.content_blocks_attributes ||= []
+        # 新規作成時かつデータが空の場合のみ空配列をセット
+        self.content_blocks_attributes ||= []
     end
   end
   
@@ -50,7 +51,7 @@ class ArticleForm
     return false unless valid?
 
     # トランザクション開始
-    Article.transactionon do
+    Article.transaction do
 
       # Articleの保存/更新
       # self.id が存在する場合（既存編集）は検索してインスタンスを取得し、
@@ -79,39 +80,48 @@ class ArticleForm
       false
   end
 
+  def content_blocks_attributes=(attributes)
+    @content_blocks_attributes = attributes
+  end
+
   # ContentBlockの保存/更新/削除処理
   def save_content_blocks(article)
-    
-    # ContentBlockのattributesを処理
-    # positionはフォームから送信された順番に基づいて設定
-    self.content_blocks_attributes.each_with_index do | block_attr, index |
-      # 文字列とシンボルのどちらをキーに指定してもアクセスできるように変換　例：{ a: 1 }.with_indifferent_access["a"] # => 1　
-      block_attr = block_attr.with_indifferent_access
+    # content_blocks_attributes が空なら何もしない
+    return if content_blocks_attributes.blank?
 
-      # ブロックが削除フラグ付きの場合かつidが存在する場合
-      if block_attr[:_destroy] == '1' && block_attr[:id].present?
-        # dbに保存されている既存のContentBlockを検索して削除
-        content_block = article.content_blocks.find(block_attr[:id])
-        content_block.destroy
-        # コンテンツは削除されたため、次のループへ
+    # Railsのフォームからハッシュ形式 {"0"=>{...}, "1"=>{...}} で届くため、
+    # その「値」の部分だけを配列として取り出す
+    attributes_array = if content_blocks_attributes.is_a?(Hash)
+                         content_blocks_attributes.values
+                       else
+                         content_blocks_attributes
+                       end
+
+    attributes_array.each_with_index do |block_attr, index|
+      # block_attr をシンボルでもアクセスできるように変換
+      b = block_attr.with_indifferent_access
+
+      # 削除処理
+      if b[:_destroy] == '1'
+        article.content_blocks.find(b[:id]).destroy if b[:id].present?
         next
       end
 
-      # ブロックの作成または更新
-      # positionはループのインデックスを使用して設定
-      block_attr [:position] = index
+      # 保存するパラメータの整理（contentやblock_typeがさらにハッシュになっていないか確認）
+      # View側の不具合（例の ] 問題）でハッシュになっている場合にも対応できる書き方
+      save_params = {
+        block_type: b[:block_type].is_a?(Hash) ? b[:block_type].values.first : b[:block_type],
+        content:    b[:content].is_a?(Hash) ? b[:content].values.first : b[:content],
+        position:   index # 送信された順番を保持
+      }
 
-      # 既存ブロックの更新
-      if block_attr[:id].present?
-        # 更新したいarticleに紐づいている全てのcontent_blockレコードをidで検索して取得。idで検索するためfindを使用
-        content_block = article.content_blocks.find(block_attr[:id])
-        #id, _destroyキーは不要なので除外して更新
-        content_block.update!(block_attr.except(:id, :_destroy)) 
+      if b[:id].present?
+        # 既存ブロックの更新
+        article.content_blocks.find(b[:id]).update!(save_params)
       else
         # 新規ブロックの作成
-        article.content_blocks.create!(block_attr.except(:_destroy))
+        article.content_blocks.create!(save_params)
       end
-
-    end #end content_blocks_attributes.each_with_index
-  end #end def save_content_blocks
+    end
+  end
 end #end class ArticleForm

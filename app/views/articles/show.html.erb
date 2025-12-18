@@ -1,7 +1,27 @@
 <h1><%= @article.title %></h1>
 
-<p><%= @article.body %></p>
+<p><%= @article.summary %></p>
 
+<h2>Content Blocks</h2>
+<% @article.content_blocks.order(:position).each do |block| %>
+  <div class="content-block mb-3">
+    <% case block.block_type %>
+    <% when 'h1' %>
+      <h1 class="fw-bold"><%= block.content %></h1>
+    <% when 'h2' %>
+      <h2 class="border-bottom"><%= block.content %></h2>
+    <% when 'p' %>
+      <p style="white-space: pre-wrap;"><%= block.content %></p>
+    <% when 'image' %>
+      <% if block.content.present? %>
+        <%= image_tag block.content, class: "img-fluid rounded" %>
+      <% end %>
+    <% else %>
+      <%# 想定外のタイプはそのまま出す %>
+      <%= block.content %>
+    <% end %>
+  </div>
+<% end %>
 <ul>
   <li><%= link_to "Edit", edit_article_path(@article) %></li>
   <li><%= link_to "Destroy", article_path(@article), data: {

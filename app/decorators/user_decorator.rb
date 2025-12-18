@@ -1,7 +1,10 @@
 class UserDecorator
+  extend Forwardable
+  def_delegators :@user, :image_icon, :image_x, :image_y, :image_w, :image_h, :name, :articles
 
   # モデルのインスタンスを保持する　インスタンス変数の値を返す
   attr_reader :user
+  
   
   # 初期化メソッド 生成後自動で呼ばれる
   def initialize(user)
@@ -33,7 +36,7 @@ class UserDecorator
 
 # 現在のuserに関連付けられた記事数を返すメソッド
   def articles_count
-    @user.articles.where(is_public: true).count
+    # @user.articles.where(is_public: true).count
   end
 
 end

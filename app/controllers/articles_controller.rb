@@ -6,11 +6,11 @@ class ArticlesController < ApplicationController
 
   def new
     # 新規記事を作成している　post
-    @article = ArticleForm.new(user_id: session[:user_id])
+    @article_form = ArticleForm.new(user_id: session[:user_id])
   end
 
   def create
-    #現在ログインしているuser_idを格納????
+    #article_form_paramsに現在ログインしているuser_idを統合し格納
     form_params_with_user = article_form_params.merge(user_id: session[:user_id])
     # 送信されたフォームデータを基にArticleFormオブジェクトを初期化
     @article_form = ArticleForm.new(form_params_with_user)
@@ -49,26 +49,33 @@ class ArticlesController < ApplicationController
 
   # 記事編集
   def edit
+    @article = Article.find(params[:id])
     # 既存の記事IDを基にArticleFormオブジェクトを初期化
     # ArticleFormのinitialize内で、既存の記事とContentBlockを取得する
-    @article = ArticleForm.new(id: params[:id]) #既存のユーザを参照している　patch
+    @article_form = ArticleForm.new(id: @article.id) #既存のユーザを参照している　patch
+
   end
 
   # 記事更新
   def update
+    # URLのIDとフォームの値を統合
     # 既存の記事IDと送信されたパラメータを組み合わせてフォームオブジェクトを初期化
-    form_params_with_id = article_form_params.merge(user_id: session[:user_id])
+    form_params = article_form_params.merge(
+      id: params[:id], # これを明示的に追加！
+      user_id: session[:user_id]
+    )
 
-    @article_form = ArticleForm.new(form_params_with_id)
+    @article_form = ArticleForm.new(form_params)
     p "update @article_form:", @article_form
 
     #フォームオブジェクトのsaveメソッドを呼び出し
     if @article_form.save
       # 保存成功後、更新された記事ページへリダイレクト
       # ArticleFormに保存した記事のIDがあることを前提とする
-      redirect_to @article_form.article
+      redirect_to @article_form.article, notice: "記事を更新しました"
     else
       # エラー時は :edit テンプレートを再描画
+      p "update failed: #{@article_form.errors.full_messages}"
       render :edit, status: :unprocessable_entity
     end
     # @article = Article.find(params[:id])#DBから再取得　既存のユーザを参照している　patch
@@ -93,6 +100,7 @@ class ArticlesController < ApplicationController
         :id,
         :title,
         :summary,
+        :status,
         # ContentBlockのネストされた属性を受け取る
         content_blocks_attributes: [:id, :block_type, :content, :image_url, :position, :_destroy]
       )

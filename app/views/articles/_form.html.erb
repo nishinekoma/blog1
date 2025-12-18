@@ -1,4 +1,7 @@
-<%= form_with model: article do |form| %>
+<!-- app/views/articles/_form.html.erb     new or edit -->
+<!-- urlが参考演算子なのは、新規記事作成の場合と編集の場合で代入が変わるため。 -->
+<%= form_with model: article, scope: :article, url: article.id ? article_path(article.id) : articles_path, local: true, data: { controller: "nested-form" } do |form| %>
+  <!-- 記事の基本情報 -->
   <div>
     <%= form.label :title %><br>
     <%= form.text_field :title %>
@@ -8,9 +11,9 @@
   </div>
 
   <div>
-    <%= form.label :body %><br>
-    <%= form.text_area :body %><br>
-    <% article.errors.full_messages_for(:body).each do |message| %>
+    <%= form.label :summary %><br>
+    <%= form.text_area :summary %><br>
+    <% article.errors.full_messages_for(:summary).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
@@ -20,9 +23,42 @@
     <%= form.select :status, Visible::VALID_STATUSES, selected: article.status || 'public' %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <!-- コンテンツブロックセクション -->
+  <div id="content-blocks" data-nested-form-target="container">
+    <!-- 既存のコンテンツブロックを表示(編集時) -->
+    <% if @article_form.content_blocks_attributes.present? %>
+      <% @article_form.content_blocks_attributes.each_with_index do |block, index| %>
+        <%= render 'content_block_fields', f: form, block: block, index: index %>
+      <% end %>
+    <% end %>
   </div>
+
+  <!-- コンテンツブロック追加ボタン -->
+  <div class="add-block-section">
+    <!-- ボタンをクリックすると選択肢を表示しJsで制御 -->
+    <button type="button" data-action="click->nested-form#toggleMenu">＋ ブロックを追加</button>
+      
+    <div data-nested-form-target="menu" style="display: none;">
+      <p> タイプを選択して下さい。</p>
+      <% %w[h1 h2 h3 text image].each do |type| %>
+        <button type="button" data-action="click->nested-form#add" data-type="<%= type %>">
+          <%= type.upcase %>ブロックを追加
+        </button>
+      <% end %>
+      <button type="button" data-action="click->nested-form#ToggleMenu">キャンセル</button>
+    </div>
+  </div>
+
+  <!-- 保存・キャンセル -->
+  <hr><!--- 仕切り線 -->
+  <div class="actions">
+    <%= form.submit "Save" %>
+    <%= link_to "Cancel", root_path, data: { confirm: "変更は破棄されます。よろしいですか？" } %>
+  </div>
+
+  <template data-nested-form-target="template">
+    <%= render 'content_block_fields', f: form, block: {}, index: "NEW_RECORD" %>
+  </template>
 <% end %>
 <!--partial 部分的なファイル名　パーシャルファイル名は　最初に　＿　を
 　　つける必要がある。
